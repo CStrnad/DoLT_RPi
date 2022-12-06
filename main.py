@@ -16,15 +16,16 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S',
 )
 logging.info("Program initiating.")
+bitrate = 10 #bits per second or laser switches per second
+
+#Identify GPIO pin association with hardware.
+laser = 2
+sensor = 3
 
 #Function serves to set up hardware for RPi
 def setupHardware():
     #Indicate to GPIO library to utilize Board Pin Designations
     GPIO.setmode(GPIO.BCM)
-
-    #Identify GPIO pin association with hardware.
-    laser = 2
-    sensor = 3
 
     #Define Pin-Interface mode
     GPIO.setup(sensor, GPIO.IN)  #Sensor Input
@@ -47,13 +48,13 @@ def binary_to_ascii(input):
     print(output)
 
 #Takes input as string and returns array of binary bytes equiv to each char
-def toBinary(a):
-  l,m=[],[]
-  for i in a:
-    l.append(ord(i))
-  for i in l:
-    m.append(int(bin(i)[2:]))
-  return m
+# I was very tired when writing this...
+def toBinary(textArr):
+    binaryArray = []
+    binaryArray = "".join(format(ord(c), "b") for c in textArr)
+    binaryArray = int(binaryArray)
+    binaryArray = [int(x) for x in str(binaryArray)]
+    return binaryArray
 
 #GPIO.input(channel)    #Return 0 or 1 (High or Low)
 #GPIO.output(channel, state)    #Set channel to state.
@@ -63,7 +64,7 @@ def ptSensorInit():
         tic = time.perf_counter()
         sigValue = GPIO.input(3)
         toc = time.perf_counter()
-        print(f"time to poll sensor:\t {toc-tic:0.10f}")
+        #print(f"time to poll sensor:\t {toc-tic:0.10f}")
         time.sleep(1)
         
 
@@ -71,7 +72,12 @@ initializeSensor = Thread(target= ptSensorInit)
 
 def sendData(str_message):
     print("Sending the following message: ", str_message)
-    time.sleep(10)
+    logging.info("From sendData: message to be transmitted is:\t" + str(str_message))
+    payload = toBinary(str_message)
+    logging.info("From sendData: Binary of message is:\t" + str(payload))
+    for i in range(len(payload)):
+        GPIO.output(laser, payload[i])
+        time.sleep(1/bitrate)
 
 GPIO.cleanup()  #Free up GPIO resources, return channels back to default.
 
@@ -79,8 +85,13 @@ GPIO.cleanup()  #Free up GPIO resources, return channels back to default.
 #Main
 setupHardware()
 initializeSensor.start()
+
+testMessage = "Hello World!"
+
 while True:
-    consoleInput = input("Enter message to send or type quit: ")
-    if (len(consoleInput)==4 and consoleInput == "quit"): break
+    # consoleInput = str(input("Enter message to send or type quit: "))
+    consoleInput = testMessage
     trSend = Thread(target = sendData, args=[consoleInput])
     trSend.start()
+
+    time.sleep(6000)
