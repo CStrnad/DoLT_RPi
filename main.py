@@ -16,7 +16,7 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S',
 )
 logging.info("Program initiating.")
-bitrate = 10 #bits per second or laser switches per second
+bitrate = 50 #bits per second or laser switches per second
 
 #Identify GPIO pin association with hardware.
 laser = 2
@@ -79,6 +79,7 @@ def sendData(str_message):
         GPIO.output(laser, payload[i])
         print("State should be:\t" + str(payload[i]))
         time.sleep(1/bitrate)
+    GPIO.output(laser, 0) #Return transmitter to 0 at end. 
 
 GPIO.cleanup()  #Free up GPIO resources, return channels back to default.
 
