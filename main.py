@@ -1,5 +1,5 @@
 try:
-    import RPI.GPIO as GPIO   #Used to interface with hardware GPIO pins on RPi.
+    import RPi.GPIO as GPIO   #Used to interface with hardware GPIO pins on RPi.
 except:
     from GPIOEmulator.EmulatorGUI import GPIO #import RPi.GPIO as GPIO import time import traceback
     #If error occurs in VSCode, use "pip install GPIOEmulator to add package"
