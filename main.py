@@ -53,6 +53,7 @@ def toBinary(textArr):
     binaryArray = []
     binaryArray = "".join(format(ord(c), "b") for c in textArr)
     binaryArray = int(binaryArray)
+    logging.info("From toBinary: Binary of payload is:\t" + str(binaryArray))
     binaryArray = [int(x) for x in str(binaryArray)]
     return binaryArray
 
@@ -74,9 +75,9 @@ def sendData(str_message):
     print("Sending the following message: ", str_message)
     logging.info("From sendData: message to be transmitted is:\t" + str(str_message))
     payload = toBinary(str_message)
-    logging.info("From sendData: Binary of message is:\t" + str(payload))
     for i in range(len(payload)):
         GPIO.output(laser, payload[i])
+        print("State should be:\t" + str(payload[i]))
         time.sleep(1/bitrate)
 
 GPIO.cleanup()  #Free up GPIO resources, return channels back to default.
