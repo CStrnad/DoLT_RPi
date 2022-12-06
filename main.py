@@ -55,31 +55,38 @@ def toBinary(textArr):
     binaryArray = int(binaryArray)
     logging.info("From toBinary: Binary of payload is:\t" + str(binaryArray))
     binaryArray = [int(x) for x in str(binaryArray)]
-    return binaryArray
+    return binaryArray #Returns array of single bit elements.
+
+def encode(binaryArray):   #Takes in array of single bit elements of type int
+    changeMe = []
+    #Aishik does his cool stuff here
+    return changeMe   #Returns array of single bit elements of type int, but 4B5B style
 
 #GPIO.input(channel)    #Return 0 or 1 (High or Low)
 #GPIO.output(channel, state)    #Set channel to state.
 
 def ptSensorInit():
+    logging.info("ptSensorInit: Sensor Initialized.")
     while True:
         tic = time.perf_counter()
         sigValue = GPIO.input(3)
         toc = time.perf_counter()
-        #print(f"time to poll sensor:\t {toc-tic:0.10f}")
         time.sleep(1)
         
 
 initializeSensor = Thread(target= ptSensorInit)
 
+#TODO: Add 4B5B Functionality shit
 def sendData(str_message):
     print("Sending the following message: ", str_message)
-    logging.info("From sendData: message to be transmitted is:\t" + str(str_message))
+    logging.info("sendData: message to be transmitted is:\t" + str(str_message))
     payload = toBinary(str_message)
     for i in range(len(payload)):
         GPIO.output(laser, payload[i])
         print("State should be:\t" + str(payload[i]))
         time.sleep(1/bitrate)
-    GPIO.output(laser, 0) #Return transmitter to 0 at end. 
+    GPIO.output(laser, 0) #Return transmitter to 0 at end.
+    logging.info("sendData: Transmission complete. Killing thread.") 
 
 GPIO.cleanup()  #Free up GPIO resources, return channels back to default.
 
