@@ -64,3 +64,6 @@ print("Binary of input:\t " + str(binaryOfMessage))
 
 afterEncoding = encode(binaryOfMessage)
 print("Encoded message:\t" + str(afterEncoding))
+
+afterDecoding = decode(afterEncoding)
+print("Decoded binary:\t" + str(afterDecoding))
