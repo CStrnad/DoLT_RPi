@@ -14,7 +14,7 @@ def encode(binaryArray):   #Takes in array of single bit elements of type int
     chunk = ''
     chunk_list = []
     for i in binaryArray:
-        chunk += i
+        chunk += str(i)
         if (i+1)%4 is 0:
             chunk_list.append(chunk)
             chunk = ''
@@ -43,14 +43,14 @@ def decode(binaryArray):
     chunk = ''
     chunk_list = []
     for i in binaryArray:
-        chunk += i
+        chunk += str(i)
         if (i+1)%5 is 0:
             chunk_list.append(chunk)
             chunk = ''
     
     output_list = []
     for j in chunk_list:
-        four_b = dictionary[j]
+        four_b = dictionary_correct[j]
         for k in four_b:
             output_list.append(k)
 
