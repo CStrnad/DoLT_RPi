@@ -174,7 +174,7 @@ initializeSensor = Thread(target= ptSensorInit)
 def sendData(str_message):
     print("Sending the following message: ", str_message)
     logging.info("sendData: message to be transmitted is:\t" + str(str_message))
-    payload = toBinary(str_message)
+    payload = encode(toBinary(str_message))
     for i in range(len(payload)):
         GPIO.output(laser, payload[i])
         print("State should be:\t" + str(payload[i]))

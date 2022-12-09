@@ -1,0 +1,53 @@
+2022-12-05 23:16:47.345 INFO main - <module>: Program initiating.
+2022-12-05 23:16:48.406 DEBUG main - setupHardware: Setup complete.
+2022-12-05 23:17:27.309 INFO main - <module>: Program initiating.
+2022-12-05 23:17:28.355 DEBUG main - setupHardware: Setup complete.
+2022-12-05 23:59:43.412 INFO main - <module>: Program initiating.
+2022-12-05 23:59:44.462 DEBUG main - setupHardware: Setup complete.
+2022-12-06 00:00:00.884 INFO main - <module>: Program initiating.
+2022-12-06 00:00:01.935 DEBUG main - setupHardware: Setup complete.
+2022-12-06 00:01:52.816 INFO main - <module>: Program initiating.
+2022-12-06 00:01:53.869 DEBUG main - setupHardware: Setup complete.
+2022-12-06 00:03:37.904 INFO main - <module>: Program initiating.
+2022-12-06 00:03:38.958 DEBUG main - setupHardware: Setup complete.
+2022-12-06 00:31:19.434 INFO main - <module>: Program initiating.
+2022-12-06 00:31:20.492 DEBUG main - setupHardware: Setup complete.
+2022-12-06 00:32:14.255 INFO main - <module>: Program initiating.
+2022-12-06 00:32:15.310 DEBUG main - setupHardware: Setup complete.
+2022-12-06 00:32:40.727 INFO main - <module>: Program initiating.
+2022-12-06 00:32:41.776 DEBUG main - setupHardware: Setup complete.
+2022-12-06 00:34:48.409 INFO main - <module>: Program initiating.
+2022-12-06 00:34:49.464 DEBUG main - setupHardware: Setup complete.
+2022-12-06 00:41:52.173 INFO main - <module>: Program initiating.
+2022-12-06 00:41:53.244 DEBUG main - setupHardware: Setup complete.
+2022-12-06 00:52:58.847 INFO main - <module>: Program initiating.
+2022-12-06 00:52:59.905 DEBUG main - setupHardware: Setup complete.
+2022-12-06 00:55:43.207 INFO main - <module>: Program initiating.
+2022-12-06 00:55:44.300 DEBUG main - setupHardware: Setup complete.
+2022-12-06 00:56:36.631 INFO main - <module>: Program initiating.
+2022-12-06 00:56:37.700 DEBUG main - setupHardware: Setup complete.
+2022-12-06 00:57:19.409 INFO main - <module>: Program initiating.
+2022-12-06 00:57:20.465 DEBUG main - setupHardware: Setup complete.
+2022-12-06 00:57:41.392 INFO main - <module>: Program initiating.
+2022-12-06 00:57:42.433 DEBUG main - setupHardware: Setup complete.
+2022-12-06 00:58:06.210 INFO main - <module>: Program initiating.
+2022-12-06 00:58:07.281 DEBUG main - setupHardware: Setup complete.
+2022-12-06 00:58:47.065 INFO main - <module>: Program initiating.
+2022-12-06 00:58:48.123 DEBUG main - setupHardware: Setup complete.
+2022-12-06 01:02:53.052 INFO main - <module>: Program initiating.
+2022-12-06 01:02:54.106 DEBUG main - setupHardware: Setup complete.
+2022-12-06 01:02:54.110 INFO main - sendData: From sendData: message to be transmitted is:	Hello World!
+2022-12-06 01:02:54.110 INFO main - sendData: From sendData: Binary of message is:	[1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1]
+2022-12-09 09:25:10.428 INFO main - <module>: Program initiating.
+2022-12-09 09:25:11.472 DEBUG main - setupHardware: Setup complete.
+2022-12-09 09:25:11.474 INFO main - ptSensorInit: ptSensorInit: Sensor Initialized.
+2022-12-09 09:25:11.475 INFO main - sendData: sendData: message to be transmitted is:	Hello World!
+2022-12-09 09:27:04.234 INFO main - <module>: Program initiating.
+2022-12-09 09:27:05.276 DEBUG main - setupHardware: Setup complete.
+2022-12-09 09:27:05.277 INFO main - ptSensorInit: ptSensorInit: Sensor Initialized.
+2022-12-09 09:27:05.279 INFO main - sendData: sendData: message to be transmitted is:	Hello World!
+2022-12-09 09:28:22.692 INFO main - <module>: Program initiating.
+2022-12-09 09:28:23.737 DEBUG main - setupHardware: Setup complete.
+2022-12-09 09:28:23.739 INFO main - ptSensorInit: ptSensorInit: Sensor Initialized.
+2022-12-09 09:28:23.740 INFO main - sendData: sendData: message to be transmitted is:	Hello World!
+2022-12-09 09:28:38.808 INFO main - sendData: sendData: Transmission complete. Killing thread.
