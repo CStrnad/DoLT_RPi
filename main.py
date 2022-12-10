@@ -201,6 +201,11 @@ def ptSensorInit():
             bits_to_decode = bit_stream[2:(bits_total-10)]
             print(bits_to_decode)
             #print(bits_total, len(bits_to_decode))s
+            decodedArray = decode(bits_to_decode)
+            textArray = binary_to_ascii(''.join(decodedArray))
+            print("decodedArray:\n"+str(decodedArray))
+            print("textArray:\n"+str(textArray))
+            print("type A:\t "+str(type(decodedArray))+"\nType B:\n"+str(type(textArray))+"\nTypeAElem:\n"+str(type(decodedArray[1]))+"\nTypeBElem:\n"+str(type(textArray[1])))
             print(binary_to_ascii(''.join(decode(correct_arr))))
             print(binary_to_ascii(''.join(decode(bits_to_decode))))
             print(bits_to_decode==correct_arr)
