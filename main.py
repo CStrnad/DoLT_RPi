@@ -160,42 +160,45 @@ def binary_to_ascii(input):
 #GPIO.input(channel)    #Return 0 or 1 (High or Low)
 #GPIO.output(channel, state)    #Set channel to state.
 
-bits_total = 0
-global count_int #number of interrupts received
-count_int = 0
-timestamps = [0]*(200) #timestamps
-period = 1/bitrate #length of one pulse in seconds
-bit_stream = [0]*(200) #recorded bits
 
-def receive_interrupt(channel):
-    print("Function triggered")
-    #check state of the sensor
-    if not GPIO.input(sensor):
-        state = 0
-    else:
-        state = 1
-
-    #calculate time difference since last interrupt and approximate how many pulses passed
-    timestamps[count_int] = time.perf_counter() #units = seconds
-    time_diff = timestamps[count_int] - timestamps[count_int-1]
-    n_pulses = round(time_diff/period)  #make sure units match
-    bits_total = bits_total + n_pulses
-
-    #print message if seen a postamble
-    if n_pulses >= 9:
-        print(bit_stream)
-
-    #store bits in the bit_stream
-    for i in range(n_pulses):
-        bit_stream[bits_total-i]
-
-    #update 
-    count_int = count_int+1 
 
 
 
 def ptSensorInit():
     logging.info("ptSensorInit: Sensor Initialized.")
+
+    bits_total = 0
+    
+    count_int = 0 #number of interrupts received
+    timestamps = [0]*(200) #timestamps
+    period = 1/bitrate #length of one pulse in seconds
+    bit_stream = [0]*(200) #recorded bits
+
+    def receive_interrupt(channel):
+        print("Function triggered")
+        #check state of the sensor
+        if not GPIO.input(sensor):
+            state = 0
+        else:
+            state = 1
+
+        #calculate time difference since last interrupt and approximate how many pulses passed
+        timestamps[count_int] = time.perf_counter() #units = seconds
+        time_diff = timestamps[count_int] - timestamps[count_int-1]
+        n_pulses = round(time_diff/period)  #make sure units match
+        bits_total = bits_total + n_pulses
+
+        #print message if seen a postamble
+        if n_pulses >= 9:
+            print(bit_stream)
+
+        #store bits in the bit_stream
+        for i in range(n_pulses):
+            bit_stream[bits_total-i]
+
+        #update 
+        count_int = count_int+1 
+
     GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt, bouncetime=1)
     # while True:
     #     t1 = time.perf_counter()
