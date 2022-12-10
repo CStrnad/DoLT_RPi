@@ -199,11 +199,12 @@ def ptSensorInit():
         if done:
             #print('bit_stream: ', bit_stream)
             bits_to_decode = bit_stream[2:(bits_total-10)]
-            print(bits_to_decode)
-            print(bits_total, len(bits_to_decode))
-            print(binary_to_ascii(decode(''.join(bits_to_decode))))
+            #print(bits_to_decode)
+            #print(bits_total, len(bits_to_decode))
             print(binary_to_ascii(decode(''.join(correct_arr))))
+            print(binary_to_ascii(decode(''.join(bits_to_decode))))
             print(bits_to_decode==correct_arr)
+            done = 0
             #print('timestamps: ', timestamps)
 
         #print message if seen a postamble
@@ -257,7 +258,7 @@ def sendData(str_message):
     #Add preamble and postamble
     encodedArray = np.array(encodedMessage)
     preamble = np.array([1])
-    postamble = np.array([1,1,1,1,1,1,1,1,1,1,0,1])
+    postamble = np.array([1,1,1,1,1,1,1,1,1,1,0])
 
     withPre = np.append(preamble, encodedArray)
     payload = np.append(withPre, postamble)
