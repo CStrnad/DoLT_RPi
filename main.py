@@ -187,13 +187,6 @@ def ptSensorInit():
 
         nonlocal count_int, bits_total, timestamps, period, bit_stream, done
         
-        if done:
-            #print('bit_stream: ', bit_stream)
-            bits_to_decode = bit_stream[2:(bits_total-10)]
-            print(bits_to_decode)
-            print(bits_total, len(bits_to_decode))
-            print(binary_to_ascii(decode(bits_to_decode)))
-            #print('timestamps: ', timestamps)
             
         #calculate time difference since last interrupt and approximate how many pulses passed
         timestamps[count_int] = time.perf_counter() #units = seconds
@@ -203,6 +196,14 @@ def ptSensorInit():
             bits_total = bits_total + n_pulses
             print(f'state= {state}, time_diff= {time_diff}, count_int= {count_int}, n_pulses= {n_pulses}, bits_total= {bits_total}')
 
+        if done:
+            #print('bit_stream: ', bit_stream)
+            bits_to_decode = bit_stream[2:(bits_total-10)]
+            print(bits_to_decode)
+            print(bits_total, len(bits_to_decode))
+            print(binary_to_ascii(decode(bits_to_decode)))
+            #print('timestamps: ', timestamps)
+            
         #print message if seen a postamble
         if (n_pulses>=9 and state==1):
             done = 1
@@ -254,7 +255,7 @@ def sendData(str_message):
     #Add preamble and postamble
     encodedArray = np.array(encodedMessage)
     preamble = np.array([1])
-    postamble = np.array([1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1])
+    postamble = np.array([1,1,1,1,1,1,1,1,1,1,0,1])
 
     withPre = np.append(preamble, encodedArray)
     payload = np.append(withPre, postamble)
