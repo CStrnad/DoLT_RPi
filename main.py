@@ -142,7 +142,7 @@ def decode(binaryArray):
     # for i in range(1, len(output_list)):
     #     if i % 8 != 0:
 
-    return output_list1
+    return output_list
 
 #Takes input of array of bytes, returns array of ascii chars.
 def binary_to_ascii(input):
