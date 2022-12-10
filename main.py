@@ -196,6 +196,7 @@ def ptSensorInit():
         if (n_pulses>=9 and state==1):
             print('bit_stream: ', bit_stream)
             bits_decode = bit_stream[1:n_pulses]
+            print(bits_decode)
             #print('timestamps: ', timestamps)
 
         #store bits in the bit_stream
