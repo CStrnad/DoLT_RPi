@@ -182,7 +182,7 @@ def ptSensorInit():
         else:
             state = 1
 
-        nonlocal count_int
+        nonlocal count_int, bits_total, timestamps, period, bit_stream
         #calculate time difference since last interrupt and approximate how many pulses passed
         timestamps[count_int] = time.perf_counter() #units = seconds
         time_diff = timestamps[count_int] - timestamps[count_int-1]
