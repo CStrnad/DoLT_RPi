@@ -225,7 +225,7 @@ def ptSensorInit():
         count_int = count_int+1
 
 
-    GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt, bouncetime=100/bitrate) #bouncetime = 1 worked for bitrate of 50
+    GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt, bouncetime=0.1) #bouncetime = 1 worked for bitrate of 50
     # while True:
     #     t1 = time.perf_counter()
     #     sigValue = GPIO.input(3)
