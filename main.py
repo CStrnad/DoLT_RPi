@@ -36,19 +36,19 @@ def setupHardware():
     logging.debug("Setup complete.")
 
 
-#Takes input of array of bytes, returns array of ascii chars.
-def binary_to_ascii(input):
-    output = []
-    count = 0
-    total = 0
-    for i in input:
-        for j in i:
-            total += int(j)*pow(2, 7-count)
-            count+=1
-        output.append(chr(total))
-        count = 0
-        total = 0
-    print(output)
+# #Takes input of array of bytes, returns array of ascii chars.
+# def binary_to_ascii(input):
+#     output = []
+#     count = 0
+#     total = 0
+#     for i in input:
+#         for j in i:
+#             total += int(j)*pow(2, 7-count)
+#             count+=1
+#         output.append(chr(total))
+#         count = 0
+#         total = 0
+#     print(output)
 
 #Takes input as string and returns array of binary bytes equiv to each char
 def toBinary(a):
@@ -155,13 +155,10 @@ def binary_to_ascii(input):
         output.append(chr(total))
         count = 0
         total = 0
-    print(output)
+    print("Inside bin2ascii"+str(output))
 
 #GPIO.input(channel)    #Return 0 or 1 (High or Low)
 #GPIO.output(channel, state)    #Set channel to state.
-
-
-
 
 correct_arr = [0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1]
 #yee
@@ -200,16 +197,14 @@ def ptSensorInit():
             #print('bit_stream: ', bit_stream)
             bits_to_decode = bit_stream[2:(bits_total-10)]
             print(bits_to_decode)
-            bits_to_decode
+            # bits_to_decode
             #print(bits_total, len(bits_to_decode))s
             decodedArray = decode(bits_to_decode)
             textArray = binary_to_ascii(decodedArray)
             print("decodedArray:\n"+str(decodedArray))
             print("textArray:\n"+str(textArray))
-            # print("type A:\t "+str(type(decodedArray))+"\nType B:\n"+str(type(textArray))+"\nTypeAElem:\n"+str(type(decodedArray[1]))+"\nTypeBElem:\n"+str(type(textArray[1])))
-            # print(binary_to_ascii(correct_arr))
-            # print(binary_to_ascii(''.join(decode(bits_to_decode))))
-            print(bits_to_decode==correct_arr)
+
+            print("Case Test:\t"+ str(bits_to_decode==correct_arr))
             done = 0
             #print('timestamps: ', timestamps)
 
