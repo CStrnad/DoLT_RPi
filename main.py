@@ -165,7 +165,7 @@ def ptSensorInit():
         t1 = time.perf_counter()
         sigValue = GPIO.input(3)
         t2 = time.perf_counter()
-        print("Time to poll:\t" + (t2-t1))
+        print("Time to poll:\t" + str(t2-t1))
         #TODO: Add long ass array to catch all input. Need to make it fill and then start pruning end of array as the max size is reached.
         time.sleep(1/bitrate)
 #The sensor is initiated above and will constantly take polls at the predefined bitrate that the sending function also uses. This should catch everything (fingers crossed)
