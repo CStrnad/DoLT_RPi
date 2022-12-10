@@ -201,8 +201,8 @@ def ptSensorInit():
             bits_to_decode = bit_stream[2:(bits_total-10)]
             print(bits_to_decode)
             print(bits_total, len(bits_to_decode))
-            print(binary_to_ascii(decode(bits_to_decode)))
-            print(binary_to_ascii(decode(correct_arr)))
+            print(binary_to_ascii(decode(''.join(bits_to_decode))))
+            print(binary_to_ascii(decode(''.join(correct_arr))))
             print(bits_to_decode==correct_arr)
             #print('timestamps: ', timestamps)
 
