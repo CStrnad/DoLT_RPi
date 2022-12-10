@@ -162,9 +162,9 @@ def binary_to_ascii(input):
 
 bits_total = 0
 count_int = 0 #number of interrupts received
-timestamps = [] #timestamps
+timestamps = [0]*(200) #timestamps
 period = 1/bitrate #length of one pulse in seconds
-bit_stream = [] #recorded bits
+bit_stream = [0]*(200) #recorded bits
 
 def receive_interrupt(channel):
     print("Function triggered")
