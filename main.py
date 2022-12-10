@@ -174,9 +174,9 @@ def ptSensorInit():
     # expectedBitCount = expectedCharCount * 10
     bits_total = 0
     count_int = 0 #number of interrupts received
-    timestamps = [0]*(1000) #timestamps
+    timestamps = [0]*(10000) #timestamps
     period = 1/bitrate #length of one pulse in seconds
-    bit_stream = [0]*(4000) #recorded bits
+    bit_stream = [0]*(40000) #recorded bits
     done = 0
 
     def receive_interrupt(sensor):
@@ -288,7 +288,7 @@ GPIO.cleanup()  #Free up GPIO resources, return channels back to default.
 setupHardware()
 initializeSensor.start()
 
-testMessage = "Cocksucker!!!"
+testMessage = "Cock Sucker!!!"
 testMessage2 = "If you're visiting this page, you're likely here because you're searching for a random sentence."
 
 while True:
