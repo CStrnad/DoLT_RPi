@@ -178,9 +178,9 @@ def ptSensorInit():
         print("Function triggered")
         #check state of the sensor
         if not GPIO.input(sensor):
-            state = 0
-        else:
             state = 1
+        else:
+            state = 0
 
         nonlocal count_int, bits_total, timestamps, period, bit_stream
         #calculate time difference since last interrupt and approximate how many pulses passed
@@ -189,16 +189,16 @@ def ptSensorInit():
             time_diff = timestamps[count_int] - timestamps[count_int-1]
             n_pulses = round(time_diff/period)  #make sure units match
             bits_total = bits_total + n_pulses
-            print(f'state= {state}, time_diff= {time_diff}, count_int= {count_int}, n_pulses= {n_pulses}')
+            #print(f'state= {state}, time_diff= {time_diff}, count_int= {count_int}, n_pulses= {n_pulses}')
 
-        # #print message if seen a postamble
-        # if n_pulses >= 9 and state==1:
-        #     print('bit_stream: ', bit_stream)
-        #     print('timestamps: ', timestamps)
+        #print message if seen a postamble
+        if n_pulses >= 9 and state==1:
+            print('bit_stream: ', bit_stream)
+            #print('timestamps: ', timestamps)
 
-        # #store bits in the bit_stream
-        # for i in range(n_pulses):
-        #     bit_stream[bits_total-i]
+        #store bits in the bit_stream
+        for i in range(n_pulses):
+            bit_stream[bits_total-i]
 
         #update 
         count_int = count_int+1
