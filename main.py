@@ -178,6 +178,15 @@ def ptSensorInit():
     def receive_interrupt(sensor):
         print("Function triggered")
         n_pulses=0
+
+        if done:
+            #print('bit_stream: ', bit_stream)
+            bits_to_decode = bit_stream[2:(bits_total-10)]
+            print(bits_to_decode)
+            print(bits_total, len(bits_to_decode))
+            print(binary_to_ascii(decode(bits_to_decode)))
+            #print('timestamps: ', timestamps)
+            
         #check state of the sensor
         if not GPIO.input(sensor):
             state = 1
@@ -192,14 +201,6 @@ def ptSensorInit():
             n_pulses = round(time_diff/period)  #make sure units match
             bits_total = bits_total + n_pulses
             print(f'state= {state}, time_diff= {time_diff}, count_int= {count_int}, n_pulses= {n_pulses}, bits_total= {bits_total}')
-
-        if done:
-            #print('bit_stream: ', bit_stream)
-            bits_to_decode = bit_stream[2:(bits_total-10)]
-            print(bits_to_decode)
-            print(bits_total, len(bits_to_decode))
-            print(binary_to_ascii(decode(bits_to_decode)))
-            #print('timestamps: ', timestamps)
 
         #print message if seen a postamble
         if (n_pulses>=9 and state==1):
