@@ -19,7 +19,7 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S',
 )
 logging.info("Program initiating.")
-bitrate = 50 #bits per second or laser switches per second
+bitrate = 1000 #bits per second or laser switches per second
 
 #Identify GPIO pin association with hardware.
 laser = 2
@@ -225,7 +225,7 @@ def ptSensorInit():
         count_int = count_int+1
 
 
-    GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt, bouncetime=1)
+    GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt, bouncetime=100/bitrate) #bouncetime = 1 worked for bitrate of 50
     # while True:
     #     t1 = time.perf_counter()
     #     sigValue = GPIO.input(3)
