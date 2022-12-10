@@ -190,10 +190,10 @@ def ptSensorInit():
             time_diff = timestamps[count_int] - timestamps[count_int-1]
             n_pulses = round(time_diff/period)  #make sure units match
             bits_total = bits_total + n_pulses
-            #print(f'state= {state}, time_diff= {time_diff}, count_int= {count_int}, n_pulses= {n_pulses}')
+            print(f'state= {state}, time_diff= {time_diff}, count_int= {count_int}, n_pulses= {n_pulses}')
 
         #print message if seen a postamble
-        if n_pulses >= 9 and state==1:
+        if n_pulses>=9 and state==1:
             print('bit_stream: ', bit_stream)
             #print('timestamps: ', timestamps)
 
