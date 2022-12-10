@@ -199,7 +199,7 @@ def ptSensorInit():
 
         #store bits in the bit_stream
         for i in range(n_pulses):
-            bit_stream[bits_total-i]
+            bit_stream[bits_total-i] = state
 
         #update 
         count_int = count_int+1
