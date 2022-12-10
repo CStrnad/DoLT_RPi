@@ -178,7 +178,15 @@ def ptSensorInit():
     def receive_interrupt(sensor):
         print("Function triggered")
         n_pulses=0
+        
+        #check state of the sensor
+        if not GPIO.input(sensor):
+            state = 1
+        else:
+            state = 0
 
+        nonlocal count_int, bits_total, timestamps, period, bit_stream, done
+        
         if done:
             #print('bit_stream: ', bit_stream)
             bits_to_decode = bit_stream[2:(bits_total-10)]
@@ -187,13 +195,6 @@ def ptSensorInit():
             print(binary_to_ascii(decode(bits_to_decode)))
             #print('timestamps: ', timestamps)
             
-        #check state of the sensor
-        if not GPIO.input(sensor):
-            state = 1
-        else:
-            state = 0
-
-        nonlocal count_int, bits_total, timestamps, period, bit_stream, done
         #calculate time difference since last interrupt and approximate how many pulses passed
         timestamps[count_int] = time.perf_counter() #units = seconds
         if count_int != 0:
