@@ -161,7 +161,8 @@ def binary_to_ascii(input):
 #GPIO.output(channel, state)    #Set channel to state.
 
 bits_total = 0
-count_int = 0 #number of interrupts received
+global count_int #number of interrupts received
+count_int = 0
 timestamps = [0]*(200) #timestamps
 period = 1/bitrate #length of one pulse in seconds
 bit_stream = [0]*(200) #recorded bits
