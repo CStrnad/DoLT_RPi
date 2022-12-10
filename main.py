@@ -19,7 +19,7 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S',
 )
 logging.info("Program initiating.")
-bitrate = 50 #bits per second or laser switches per second
+bitrate = 500 #bits per second or laser switches per second
 
 #Identify GPIO pin association with hardware.
 laser = 2
@@ -275,7 +275,7 @@ def sendData(str_message):
     print("Buffed payload:\t" + str(payload))
     for i in range(len(payload)):
         GPIO.output(laser, int(payload[i]))
-        print("State should be:\t" + str(payload[i]))
+        # print("State should be:\t" + str(payload[i]))
         time.sleep(1/bitrate)
     GPIO.output(laser, 0) #Return transmitter to 0 at end.
     logging.info("sendData: Transmission complete. Killing thread.") 
