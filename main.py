@@ -170,13 +170,13 @@ def binary_to_ascii(binaryArray):
 def ptSensorInit():
     logging.info("ptSensorInit: Sensor Initialized.")
 
-    expectedCharCount = 500 
-    expectedBitCount = expectedCharCount * 10
+    # expectedCharCount = 500 
+    # expectedBitCount = expectedCharCount * 10
     bits_total = 0
     count_int = 0 #number of interrupts received
-    timestamps = [0]*(expectedBitCount/4) #timestamps
+    timestamps = [0]*(1000) #timestamps
     period = 1/bitrate #length of one pulse in seconds
-    bit_stream = [0]*(expectedBitCount) #recorded bits
+    bit_stream = [0]*(4000) #recorded bits
     done = 0
 
     def receive_interrupt(sensor):
