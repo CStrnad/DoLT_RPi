@@ -170,7 +170,7 @@ def ptSensorInit():
      
     bits_total = 0
     count_int = 0 #number of interrupts received
-    timestamps = [0]*(200) #timestamps
+    timestamps = [0]*(800) #timestamps
     period = 1/bitrate #length of one pulse in seconds
     bit_stream = [0]*(200) #recorded bits
 
@@ -190,8 +190,9 @@ def ptSensorInit():
         bits_total = bits_total + n_pulses
 
         #print message if seen a postamble
-        if n_pulses >= 9:
-            print(bit_stream)
+        if n_pulses >= 9 and state==1:
+            print('bit_stream: ', bit_stream)
+            print('timestamps: ', timestamps)
 
         #store bits in the bit_stream
         for i in range(n_pulses):
