@@ -20,7 +20,7 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S',
 )
 logging.info("Program initiating.")
-bitrate = 2000 #bits per second or laser switches per second
+bitrate = 1500 #bits per second or laser switches per second
 
 #Identify GPIO pin association with hardware.
 laser = 2
@@ -271,10 +271,12 @@ initializeSensor.start()
 
 testMessage = "Cock Sucker!!!"
 testMessage2 = "If you're visiting this page, you're likely here because you're searching for a random sentence."
+testMessage3 = "The unanimous Declaration of the thirteen united States of America, When in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature's God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation."
+#testMessage3 is 474 chars
 
 while True:
     # consoleInput = str(input("Enter message to send or type quit: "))
-    consoleInput = testMessage2
+    consoleInput = testMessage3
     trSend = Thread(target = sendData, args=[consoleInput])
     trSend.start()
 
