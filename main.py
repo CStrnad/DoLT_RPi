@@ -166,6 +166,7 @@ period = 1/bitrate #length of one pulse in seconds
 bit_stream = [] #recorded bits
 
 def receive_interrupt():
+    print("Function triggered")
     #check state of the sensor
     if not GPIO.input(sensor):
         state = 0
