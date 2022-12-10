@@ -160,7 +160,8 @@ def binary_to_ascii(input):
 #GPIO.input(channel)    #Return 0 or 1 (High or Low)
 #GPIO.output(channel, state)    #Set channel to state.
 
-count = 0 #number of interrupts received
+bits_total = 0
+count_int = 0 #number of interrupts received
 timestamps = [] #timestamps
 period = 1/bitrate #length of one pulse in seconds
 bit_stream = [] #recorded bits
@@ -174,9 +175,10 @@ def receive_interrupt(channel):
         state = 1
 
     #calculate time difference since last interrupt and approximate how many pulses passed
-    timestamps[count] = time.perf_counter() #units = seconds
-    time_diff = timestamps[count] - timestamps[count-1]
+    timestamps[count_int] = time.perf_counter() #units = seconds
+    time_diff = timestamps[count_int] - timestamps[count_int-1]
     n_pulses = round(time_diff/period)  #make sure units match
+    bits_total = bits_total + n_pulses
 
     #print message if seen a postamble
     if n_pulses >= 9:
@@ -184,10 +186,10 @@ def receive_interrupt(channel):
 
     #store bits in the bit_stream
     for i in range(n_pulses):
-        bit_stream[count-i]
+        bit_stream[bits_total-i]
 
     #update 
-    count = count+1 
+    count_int = count_int+1 
 
 
 
