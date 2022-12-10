@@ -208,7 +208,7 @@ def ptSensorInit():
             print("decodedArray:\n"+str(decodedArray))
             print("textArray:\n"+str(textArray))
             # print("type A:\t "+str(type(decodedArray))+"\nType B:\n"+str(type(textArray))+"\nTypeAElem:\n"+str(type(decodedArray[1]))+"\nTypeBElem:\n"+str(type(textArray[1])))
-            print(binary_to_ascii(''.join(decode(correct_arr))))
+            print(binary_to_ascii(correct_arr))
             print(binary_to_ascii(''.join(decode(bits_to_decode))))
             print(bits_to_decode==correct_arr)
             done = 0
