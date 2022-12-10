@@ -9,6 +9,7 @@ from threading import Thread   #Used for multithreading of program.
 import logging   #Python logging facility for debugging and stuff
 import binascii
 import numpy as np
+import re #Regex to add a little bit of spice
 
 
 #Initiate logging
@@ -34,21 +35,6 @@ def setupHardware():
     GPIO.setup(sensor, GPIO.IN)  #Sensor Input
     GPIO.setup(laser, GPIO.OUT) #Laser interface
     logging.debug("Setup complete.")
-
-
-# #Takes input of array of bytes, returns array of ascii chars.
-# def binary_to_ascii(input):
-#     output = []
-#     count = 0
-#     total = 0
-#     for i in input:
-#         for j in i:
-#             total += int(j)*pow(2, 7-count)
-#             count+=1
-#         output.append(chr(total))
-#         count = 0
-#         total = 0
-#     print(output)
 
 #Takes input as string and returns array of binary bytes equiv to each char
 def toBinary(a):
@@ -144,19 +130,6 @@ def decode(binaryArray):
 
     return output_list
 
-#Takes input of array of bytes, returns array of ascii chars.
-# def binary_to_ascii(input):
-#     output = []
-#     count = 0
-#     total = 0
-#     for i in input:
-#         total += int(i)*pow(2, 7-count)
-#         count+=1
-#         output.append(chr(total))
-#         count = 0
-#         total = 0
-#     print("Inside bin2ascii"+str(output))
-
 def binary_to_ascii(binaryArray):
     binaryArray = ''.join(binaryArray)
     return binascii.unhexlify('%x' % int('0b' + binaryArray, 2)).decode("utf-8") 
@@ -247,6 +220,18 @@ def ptSensorInit():
         Once stop symbol detected, send captured 2nd buffer to be processed and clear main buffer """
 
 
+
+def precise_delay(delay_amount):
+    prv_t = time.perf_counter()
+
+    try:
+        if len(re.split(r'\.', str(delay_amount))[1]) < 4:
+            while not round((time.perf_counter() - prv_t) * 1000) / 1000 - 0.001 >= delay_amount:
+                pass
+        else:
+            raise ValueError()
+    except:
+        raise ValueError('precise_delay only accepts millisecond precision or less (0.001).')
         
 
 initializeSensor = Thread(target= ptSensorInit)
@@ -276,7 +261,8 @@ def sendData(str_message):
     for i in range(len(payload)):
         GPIO.output(laser, int(payload[i]))
         # print("State should be:\t" + str(payload[i]))
-        time.sleep(1/bitrate)
+        #time.sleep(1/bitrate)
+        precise_delay(1/bitrate)
     GPIO.output(laser, 0) #Return transmitter to 0 at end.
     logging.info("sendData: Transmission complete. Killing thread.") 
     print("Send complete")
