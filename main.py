@@ -158,6 +158,7 @@ def decode(binaryArray):
 #     print("Inside bin2ascii"+str(output))
 
 def binary_to_ascii(binaryArray):
+    binaryArray = ''.join(binaryArray)
     return binascii.unhexlify('%x' % int('0b' + binaryArray, 2)).decode("utf-8") 
 
 #GPIO.input(channel)    #Return 0 or 1 (High or Low)
