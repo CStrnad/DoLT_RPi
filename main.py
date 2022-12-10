@@ -279,6 +279,7 @@ def sendData(str_message):
         time.sleep(1/bitrate)
     GPIO.output(laser, 0) #Return transmitter to 0 at end.
     logging.info("sendData: Transmission complete. Killing thread.") 
+    print("Send complete")
 
 GPIO.cleanup()  #Free up GPIO resources, return channels back to default.
 
