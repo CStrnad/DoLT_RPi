@@ -169,12 +169,14 @@ def binary_to_ascii(binaryArray):
 #yee
 def ptSensorInit():
     logging.info("ptSensorInit: Sensor Initialized.")
-     
+
+    expectedCharCount = 500 
+    expectedBitCount = expectedCharCount * 10
     bits_total = 0
     count_int = 0 #number of interrupts received
-    timestamps = [0]*(200) #timestamps
+    timestamps = [0]*(expectedBitCount/4) #timestamps
     period = 1/bitrate #length of one pulse in seconds
-    bit_stream = [0]*(800) #recorded bits
+    bit_stream = [0]*(expectedBitCount) #recorded bits
     done = 0
 
     def receive_interrupt(sensor):
@@ -287,10 +289,11 @@ setupHardware()
 initializeSensor.start()
 
 testMessage = "Cocksucker!!!"
+testMessage2 = "If you're visiting this page, you're likely here because you're searching for a random sentence. Sometimes a random word just isn't enough, and that is where the random sentence generator comes into play. By inputting the desired number, you can make a list of as many random sentences as you want or need. Producing random sentences can be helpful in a number of different ways."
 
 while True:
     # consoleInput = str(input("Enter message to send or type quit: "))
-    consoleInput = testMessage
+    consoleInput = testMessage2
     trSend = Thread(target = sendData, args=[consoleInput])
     trSend.start()
 
