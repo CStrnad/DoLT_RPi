@@ -179,9 +179,9 @@ def ptSensorInit():
         n_pulses=0
         #check state of the sensor
         if not GPIO.input(sensor):
-            state = 1
-        else:
             state = 0
+        else:
+            state = 1
 
         nonlocal count_int, bits_total, timestamps, period, bit_stream
         #calculate time difference since last interrupt and approximate how many pulses passed
