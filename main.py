@@ -9,7 +9,7 @@ from threading import Thread   #Used for multithreading of program.
 import logging   #Python logging facility for debugging and stuff
 import binascii
 import numpy as np
-import re #Regex to add a little bit of spice
+from time import perf_counter
 
 
 #Initiate logging
@@ -221,18 +221,6 @@ def ptSensorInit():
 
 
 
-def precise_delay(delay_amount):
-    prv_t = time.perf_counter()
-
-    try:
-        if len(re.split(r'\.', str(delay_amount))[1]) < 4:
-            while not round((time.perf_counter() - prv_t) * 1000) / 1000 - 0.001 >= delay_amount:
-                pass
-        else:
-            raise ValueError()
-    except:
-        raise ValueError('precise_delay only accepts millisecond precision or less (0.001).')
-        
 
 initializeSensor = Thread(target= ptSensorInit)
 
@@ -261,8 +249,14 @@ def sendData(str_message):
     for i in range(len(payload)):
         GPIO.output(laser, int(payload[i]))
         # print("State should be:\t" + str(payload[i]))
+        sleep_time = 1/bitrate
+
+        start_t = perf_counter()
+        while (perf_counter()-start_t<sleep_time):
+            continue
+
+
         #time.sleep(1/bitrate)
-        precise_delay(1/bitrate)
     GPIO.output(laser, 0) #Return transmitter to 0 at end.
     logging.info("sendData: Transmission complete. Killing thread.") 
     print("Send complete")
