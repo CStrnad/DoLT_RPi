@@ -142,7 +142,7 @@ def decode(binaryArray):
     # for i in range(1, len(output_list)):
     #     if i % 8 != 0:
 
-    return output_list
+    return output_list2
 
 #Takes input of array of bytes, returns array of ascii chars.
 def binary_to_ascii(input):
@@ -200,6 +200,7 @@ def ptSensorInit():
             #print('bit_stream: ', bit_stream)
             bits_to_decode = bit_stream[2:(bits_total-10)]
             print(bits_to_decode)
+            bits_to_decode
             #print(bits_total, len(bits_to_decode))s
             print("Type of data in bits_to_decode:\t"+str(type(bits_to_decode[1])))
             decodedArray = decode(bits_to_decode)
