@@ -145,17 +145,20 @@ def decode(binaryArray):
     return output_list
 
 #Takes input of array of bytes, returns array of ascii chars.
-def binary_to_ascii(input):
-    output = []
-    count = 0
-    total = 0
-    for i in input:
-        total += int(i)*pow(2, 7-count)
-        count+=1
-        output.append(chr(total))
-        count = 0
-        total = 0
-    print("Inside bin2ascii"+str(output))
+# def binary_to_ascii(input):
+#     output = []
+#     count = 0
+#     total = 0
+#     for i in input:
+#         total += int(i)*pow(2, 7-count)
+#         count+=1
+#         output.append(chr(total))
+#         count = 0
+#         total = 0
+#     print("Inside bin2ascii"+str(output))
+
+def binary_to_ascii(binaryArray):
+    return binascii.unhexlify('%x' % int('0b' + binaryArray, 2)).decode("utf-8") 
 
 #GPIO.input(channel)    #Return 0 or 1 (High or Low)
 #GPIO.output(channel, state)    #Set channel to state.
