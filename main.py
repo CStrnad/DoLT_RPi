@@ -164,7 +164,8 @@ def binary_to_ascii(binaryArray):
 #GPIO.input(channel)    #Return 0 or 1 (High or Low)
 #GPIO.output(channel, state)    #Set channel to state.
 
-correct_arr = [0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1]
+# correct_arr = [0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1]
+
 #yee
 def ptSensorInit():
     logging.info("ptSensorInit: Sensor Initialized.")
@@ -208,7 +209,7 @@ def ptSensorInit():
             print("decodedArray:\n"+str(decodedArray))
             print("textArray:\n"+str(textArray))
 
-            print("Case Test:\t"+ str(bits_to_decode==correct_arr))
+            # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
             done = 0
             #print('timestamps: ', timestamps)
 
@@ -285,7 +286,7 @@ GPIO.cleanup()  #Free up GPIO resources, return channels back to default.
 setupHardware()
 initializeSensor.start()
 
-testMessage = "Hello World!"
+testMessage = "Cocksucker!!!"
 
 while True:
     # consoleInput = str(input("Enter message to send or type quit: "))
