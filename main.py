@@ -195,7 +195,7 @@ def ptSensorInit():
         #print message if seen a postamble
         if (n_pulses>=9 and state==1):
             #print('bit_stream: ', bit_stream)
-            bits_to_decode = bit_stream[1:(bits_total-10)]
+            bits_to_decode = bit_stream[2:(bits_total-10)]
             print(bits_to_decode)
             print(bits_total, len(bits_to_decode))
             print(binary_to_ascii(decode(bits_to_decode)))
