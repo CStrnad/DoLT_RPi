@@ -174,7 +174,7 @@ def ptSensorInit():
     period = 1/bitrate #length of one pulse in seconds
     bit_stream = [0]*(800) #recorded bits
 
-    def receive_interrupt(pin):
+    def receive_interrupt(sensor):
         print("Function triggered")
         #check state of the sensor
         if not GPIO.input(sensor):
