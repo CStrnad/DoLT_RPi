@@ -171,7 +171,7 @@ def ptSensorInit():
             time_diff = timestamps[count_int] - timestamps[count_int-1]
             n_pulses = round(time_diff/period)  #make sure units match
             bits_total = bits_total + n_pulses
-            print(f'state= {state}, time_diff= {time_diff}, count_int= {count_int}, n_pulses= {n_pulses}, bits_total= {bits_total}')
+            #print(f'state= {state}, time_diff= {time_diff}, count_int= {count_int}, n_pulses= {n_pulses}, bits_total= {bits_total}')
 
         if done:
             #print('bit_stream: ', bit_stream)
@@ -181,7 +181,7 @@ def ptSensorInit():
             #print(bits_total, len(bits_to_decode))s
             decodedArray = decode(bits_to_decode)
             textArray = binary_to_ascii(decodedArray)
-            print("decodedArray:\n"+str(decodedArray))
+            #print("decodedArray:\n"+str(decodedArray))
             print("textArray:\n"+str(textArray))
 
             # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
@@ -227,13 +227,15 @@ initializeSensor = Thread(target= ptSensorInit)
 #TODO: Add 4B5B Functionality shit
 def sendData(str_message):
     print("Sending the following message: ", str_message)
+    print("Pausing for 2 seconds before sending")
+    time.sleep(2)
     logging.info("sendData: message to be transmitted is:\t" + str(str_message))
 
     binaryOfMessage = ""
     for letter in str_message:
         binaryOfMessage += toBinary(letter)
 
-    print("Binary of message:\t" + str(binaryOfMessage))
+    #print("Binary of message:\t" + str(binaryOfMessage))
     encodedMessage = encode(binaryOfMessage)
     
     #Add preamble and postamble
