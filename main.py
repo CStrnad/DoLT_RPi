@@ -176,6 +176,7 @@ def ptSensorInit():
 
     def receive_interrupt(sensor):
         print("Function triggered")
+        n_pulses=0
         #check state of the sensor
         if not GPIO.input(sensor):
             state = 1
