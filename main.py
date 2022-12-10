@@ -8,6 +8,7 @@ import time   #Simple time management library.
 from threading import Thread   #Used for multithreading of program.
 import logging   #Python logging facility for debugging and stuff
 import binascii
+import numpy as np
 
 
 #Initiate logging
@@ -159,15 +160,49 @@ def binary_to_ascii(input):
 #GPIO.input(channel)    #Return 0 or 1 (High or Low)
 #GPIO.output(channel, state)    #Set channel to state.
 
+count = 0 #number of interrupts received
+timestamps = [] #timestamps
+period = 1/bitrate #length of one pulse in seconds
+bit_stream = [] #recorded bits
+
+def receive_interrupt():
+    #check state of the sensor
+    if not GPIO.input(sensor):
+        state = 0
+    else:
+        state = 1
+
+    #calculate time difference since last interrupt and approximate how many pulses passed
+    timestamps[count] = time.perf_counter() #units = seconds
+    time_diff = timestamps[count] - timestamps[count-1]
+    n_pulses = round(time_diff/period)  #make sure units match
+
+    #print message if seen a postamble
+    if n_pulses >= 9:
+        print(bit_stream)
+
+    #store bits in the bit_stream
+    for i in range(n_pulses):
+        bit_stream[count-i]
+
+    #update 
+    count = count+1 
+
+
+
 def ptSensorInit():
     logging.info("ptSensorInit: Sensor Initialized.")
-    while True:
-        t1 = time.perf_counter()
-        sigValue = GPIO.input(3)
-        t2 = time.perf_counter()
-        print("Time to poll:\t" + str(t2-t1))
-        #TODO: Add long ass array to catch all input. Need to make it fill and then start pruning end of array as the max size is reached.
-        time.sleep(1/bitrate)
+    GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt, bouncetime=1)
+    # while True:
+    #     t1 = time.perf_counter()
+    #     sigValue = GPIO.input(3)
+    #     t2 = time.perf_counter()
+    #     print("Time to poll:\t" + str(t2-t1))
+    #     #TODO: Add long ass array to catch all input. Need to make it fill and then start pruning end of array as the max size is reached.
+    #     time.sleep(1/bitrate)
+
+
+
 #The sensor is initiated above and will constantly take polls at the predefined bitrate that the sending function also uses. This should catch everything (fingers crossed)
 #TODO: Identify start/stop bits and catch those.
 #Pseudo Code follows:
@@ -191,16 +226,27 @@ def sendData(str_message):
         binaryOfMessage += toBinary(letter)
 
     print("Binary of message:\t" + str(binaryOfMessage))
-    payload = encode(binaryOfMessage)
-    print("Encoded message:\t"+ str(payload))
+    encodedMessage = encode(binaryOfMessage)
+    
+    #Add preamble and postamble
+    encodedArray = np.array(encodedMessage)
+    preamble = np.array([1])
+    postamble = np.array([1,1,1,1,1,1,1,1,1,1])
+
+    withPre = np.append(preamble, encodedArray)
+    payload = np.append(withPre, postamble)
+    # print("Encoded message:\t"+ str(payload))
+
+    print("Buffed payload:\t" + str(payload))
     for i in range(len(payload)):
-        GPIO.output(laser, payload[i])
+        GPIO.output(laser, int(payload[i]))
         print("State should be:\t" + str(payload[i]))
         time.sleep(1/bitrate)
     GPIO.output(laser, 0) #Return transmitter to 0 at end.
     logging.info("sendData: Transmission complete. Killing thread.") 
 
 GPIO.cleanup()  #Free up GPIO resources, return channels back to default.
+
 
 
 #Main
