@@ -121,18 +121,34 @@ binaryOfMessage = ""
 def binary_to_ascii(binaryArray):
     return binascii.unhexlify('%x' % int('0b' + binaryArray, 2)).decode("utf-8") 
 
-testInput = "helloworld"
+testInput = "Hello world!"
 for letter in testInput:
     binaryOfMessage += toBinary(letter)
 
+print("Binary of Message:\t" + str(binaryOfMessage))
+
 afterEncoding = encode(binaryOfMessage)
 
-#print("Encoded message:\t" + str(afterEncoding))
+print("Encoded message:\t" + str(afterEncoding))
 
 afterDecoding = decode(afterEncoding)
 
-print("Decoded binary:\t " + str(afterDecoding))
+#print("Decoded binary:\t " + str(afterDecoding))
+#print("Ascii After Encode/Decode:\t " + binary_to_ascii(''.join(afterDecoding)))
 
 
+#print("Array is of type: " + str(type(binaryOfMessage)))
+binaryOfMessage = [int(x) for x in binaryOfMessage]
+#print("New Array is of type:\t" + str(type(binaryOfMessage)))
 
-print("Ascii After Encode/Decode:\t " + binary_to_ascii(''.join(afterDecoding)))
+quad = []
+for set in range(len(binaryOfMessage)):
+    set += 1
+    quad[set] = binaryOfMessage[set], binaryOfMessage[set+1], binaryOfMessage[set+2], binaryOfMessage[set+3]
+    set += 4
+print("Quad-delimited:\t" + str(quad))
+
+#my_str = '246810'
+
+#listOfInts = [int(x) for x in binaryOfMessage]
+#print(listOfInts)  # 👉️ [2, 4, 6, 8, 1, 0]

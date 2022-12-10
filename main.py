@@ -164,8 +164,18 @@ def ptSensorInit():
     while True:
         tic = time.perf_counter()
         sigValue = GPIO.input(3)
+        #TODO: Add long ass array to catch all input. Need to make it fill and then start pruning end of array as the max size is reached.
         toc = time.perf_counter()
-        time.sleep(1)
+        time.sleep(1/bitrate)
+#The sensor is initiated above and will constantly take polls at the predefined bitrate that the sending function also uses. This should catch everything (fingers crossed)
+#TODO: Identify start/stop bits and catch those.
+#Pseudo Code follows:
+""" From buffer, if start symbol detected:
+    Create second buffer and append data following the start symbol
+    Keep appending until -> stop symbol is detected:
+        Once stop symbol detected, send captured 2nd buffer to be processed and clear main buffer """
+
+
         
 
 initializeSensor = Thread(target= ptSensorInit)
@@ -174,10 +184,17 @@ initializeSensor = Thread(target= ptSensorInit)
 def sendData(str_message):
     print("Sending the following message: ", str_message)
     logging.info("sendData: message to be transmitted is:\t" + str(str_message))
-    payload = encode(toBinary(str_message))
+
+    binaryOfMessage = ""
+    for letter in str_message:
+        binaryOfMessage += toBinary(letter)
+
+    print("Binary of message:\t" + str(binaryOfMessage))
+    payload = encode(binaryOfMessage)
+    print("Encoded message:\t"+ str(payload))
     for i in range(len(payload)):
         GPIO.output(laser, payload[i])
-        print("State should be:\t" + str(payload[i]))
+        #print("State should be:\t" + str(payload[i]))
         time.sleep(1/bitrate)
     GPIO.output(laser, 0) #Return transmitter to 0 at end.
     logging.info("sendData: Transmission complete. Killing thread.") 
