@@ -293,7 +293,7 @@ testMessage2 = "If you're visiting this page, you're likely here because you're 
 
 while True:
     # consoleInput = str(input("Enter message to send or type quit: "))
-    consoleInput = testMessage2
+    consoleInput = testMessage
     trSend = Thread(target = sendData, args=[consoleInput])
     trSend.start()
 
