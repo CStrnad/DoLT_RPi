@@ -19,7 +19,7 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S',
 )
 logging.info("Program initiating.")
-bitrate = 1000 #bits per second or laser switches per second
+bitrate = 800 #bits per second or laser switches per second
 
 #Identify GPIO pin association with hardware.
 laser = 2
