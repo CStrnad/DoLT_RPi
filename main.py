@@ -153,7 +153,7 @@ def ptSensorInit():
     done = 0
 
     def receive_interrupt(sensor):
-        print("Function triggered")
+        #print("Function triggered")
         n_pulses=0
         
         #check state of the sensor
@@ -227,7 +227,7 @@ initializeSensor = Thread(target= ptSensorInit)
 #TODO: Add 4B5B Functionality shit
 def sendData(str_message):
     print("Sending the following message: ", str_message)
-    print("Pausing for 2 seconds before sending")
+    print("Pausing for 2 seconds before sending. Length of message is " + str(len(str_message) + " chars."))
     time.sleep(2)
     logging.info("sendData: message to be transmitted is:\t" + str(str_message))
 
@@ -248,6 +248,7 @@ def sendData(str_message):
     # print("Encoded message:\t"+ str(payload))
 
     print("Buffed payload:\t" + str(payload))
+    sendTimeStart = time.perf_counter()
     for i in range(len(payload)):
         GPIO.output(laser, int(payload[i]))
         # print("State should be:\t" + str(payload[i]))
@@ -261,7 +262,8 @@ def sendData(str_message):
         #time.sleep(1/bitrate)
     GPIO.output(laser, 0) #Return transmitter to 0 at end.
     logging.info("sendData: Transmission complete. Killing thread.") 
-    print("Send complete")
+    print("Send complete. Total time to send: " + str(perf_counter()-sendTimeStart) + " at " + str(bitrate) + " bits per second.")
+    
 
 GPIO.cleanup()  #Free up GPIO resources, return channels back to default.
 
@@ -284,5 +286,6 @@ while True:
     consoleInput = testMessage4
     trSend = Thread(target = sendData, args=[consoleInput])
     trSend.start()
+    
 
     time.sleep(6000)
