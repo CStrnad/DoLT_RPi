@@ -162,7 +162,8 @@ def ptSensorInit():
     def receive_interrupt(sensor):
         nonlocal count_int, bits_total, timestamps, period, bit_stream, done, n_pulses
         print("Function triggered")
-        if(done == 2): resetBufferVars
+        if(done == 2): done = 3 #Expecting an additional pulse after last message. Not sure why but this should fix it.
+        if(done == 3): resetBufferVars
         # n_pulses=0
         
         #check state of the sensor
@@ -228,7 +229,7 @@ def sendData(str_message):
     encodedArray = np.array(encodedMessage)
     preamble = np.array([1])
     # postamble = np.array([1,1,1,1,1,1,1,1,1,1,0,1])
-    postamble = np.array([1,1,1,1,1,1,1,1,1,1,0])
+    postamble = np.array([1,1,1,1,1,1,1,1,1,1,0,1])
 
     withPre = np.append(preamble, encodedArray)
     payload = np.append(withPre, postamble)
