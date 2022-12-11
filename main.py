@@ -204,12 +204,13 @@ def ptSensorInit():
             print(bits_to_decode)
             print("Message Received:\n"+str(textArray))
             #print(f'timing_errors: {timing_error}')
-            print(timestamps[2:1000])
-            print(timing_error[2:1000])
-            plt.plot(timestamps[:50], timing_error[:50])
+            plt.plot([(x-timestamps[0]) for x in timestamps[2:1000]], timing_error[2:1000])
+            plt.xlabel('time /s')
+            plt.ylabel('bit time inconsistency /us')
             plt.show(block=True)
             plt.draw()
-            plt.savefig('time stats')
+            plt.savefig('time_stats')
+ 
 
             # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
             done = 0
