@@ -190,6 +190,7 @@ def ptSensorInit():
             #print(f'state= {state}, time_diff= {time_diff}, count_int= {count_int}, n_pulses= {n_pulses}, bits_total= {bits_total}')
 
         if done:
+            GPIO.remove_event_detect(sensor)
             #print('bit_stream: ', bit_stream)
             bits_to_decode = bit_stream[2:(bits_total-10)]
             # bits_to_decode
@@ -205,9 +206,11 @@ def ptSensorInit():
             # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
             done = 0
             resetFlag = 2
+            ptSensorInit()
 
             # resetBufferVars()
             #print('timestamps: ', timestamps)
+
 
         #print message if seen a postamble
         if (n_pulses>=9 and state==1):
