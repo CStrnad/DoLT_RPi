@@ -413,6 +413,7 @@ while operate == True:
 
         while(trSend.is_alive()):
             time.sleep(0.1)
+        time.sleep(2)
 
     elif(functionality == 'receive'):
         clear_console()
