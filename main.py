@@ -27,7 +27,7 @@ logging.basicConfig(
 )
 logging.info("Program initiating.")
 global bitrate
-bitrate = 1500 #bits per second or laser switches per second
+bitrate = 2000 #bits per second or laser switches per second
 
 #Identify GPIO pin association with hardware.
 laser = 2
