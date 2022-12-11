@@ -27,7 +27,7 @@ logging.basicConfig(
 )
 logging.info("Program initiating.")
 global bitrate
-bitrate = 500 #bits per second or laser switches per second
+bitrate = 1000 #bits per second or laser switches per second
 
 #Identify GPIO pin association with hardware.
 laser = 2
@@ -192,7 +192,7 @@ def ptSensorInit():
             plt.show(block=True)
             plt.draw()
             plt.savefig('time_stats')
-            
+
             done = 0
             ptSensorInit()
 
