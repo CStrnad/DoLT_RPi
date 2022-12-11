@@ -155,22 +155,22 @@ def ptSensorInit():
     timing_error = [0]*(expectedBitCount) #pulse averaged bit time difference (from calculated with bitrate), synched with timestamps, used for timing stats analysis
     bit_stream = [0]*(bitStreamDesignator) #recorded bits
     done = 0
-    resetFlag = 0
+    #resetFlag = 0
 
     def resetBufferVars():
-        nonlocal count_int, bits_total, timestamps, period, bit_stream, done, resetFlag
+        nonlocal count_int, bits_total, timestamps, period, bit_stream, done #, resetFlag
         bits_total = count_int = done = 0
         timestamps = [0]*(expectedBitCount) #timestamps
         bit_stream = [0]*(bitStreamDesignator) #recorded bits
-        resetFlag = 0
+        #resetFlag = 0
         print("Resetting Vars")
 
     def receive_interrupt(sensor):
-        nonlocal count_int, bits_total, timestamps, period, bit_stream, done, resetFlag
+        nonlocal count_int, bits_total, timestamps, period, bit_stream, done #, resetFlag
         n_pulses = 0
         #print("Function triggered. 'done' is " + str(done) + " Flag is " + str(resetFlag))
         #if(resetFlag == 1): resetBufferVars()
-        if(resetFlag > 1): resetFlag -= 1
+       # if(resetFlag > 1): resetFlag -= 1
         
         
         
@@ -207,7 +207,7 @@ def ptSensorInit():
 
             # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
             done = 0
-            resetFlag = 2
+           # resetFlag = 2
             ptSensorInit()
 
             # resetBufferVars()
