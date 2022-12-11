@@ -14,7 +14,7 @@ import os
 import matplotlib.pyplot as plt
 
 global bitrate
-bitrate = 5000 #bits per second or laser switches per second
+bitrate = 4000 #bits per second or laser switches per second
 
 
 def clear_console():
