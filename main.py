@@ -1,7 +1,7 @@
-# try:
-import RPi.GPIO as GPIO   #Used to interface with hardware GPIO pins on RPi.
-# except:
-#     from GPIOEmulator.EmulatorGUI import GPIO #import RPi.GPIO as GPIO import time import traceback
+try:
+    import RPi.GPIO as GPIO   #Used to interface with hardware GPIO pins on RPi.
+except:
+    from GPIOEmulator.EmulatorGUI import GPIO #import RPi.GPIO as GPIO import time import traceback
     #If error occurs in VSCode, use "pip install GPIOEmulator to add package"
 
 import time   #Simple time management library.
@@ -29,7 +29,7 @@ sensor = 3
 #Function serves to set up hardware for RPi
 def setupHardware():
     #Indicate to GPIO library to utilize Board Pin Designations
-    GPIO.setmode(GPIO.BOARD)
+    GPIO.setmode(GPIO.BCM)
 
     #Define Pin-Interface mode
     GPIO.setup(sensor, GPIO.IN)  #Sensor Input
@@ -145,66 +145,63 @@ def ptSensorInit():
 
     # expectedCharCount = 500 
     # expectedBitCount = expectedCharCount * 10
-    
-bits_total = 0
-count_int = 0 #number of interrupts received
-timestamps = [0]*(50000) #timestamps
-period = 1/bitrate #length of one pulse in seconds
-bit_stream = [0]*(800000) #recorded bits
-done = 0
+    bits_total = 0
+    count_int = 0 #number of interrupts received
+    timestamps = [0]*(50000) #timestamps
+    period = 1/bitrate #length of one pulse in seconds
+    bit_stream = [0]*(800000) #recorded bits
+    done = 0
 
-def receive_interrupt(sensor):
-    #print("Function triggered")
-    n_pulses=0
-    
-    #check state of the sensor
-    if not GPIO.input(sensor):
-        state = 1
-    else:
-        state = 0
-
-    # nonlocal 
-    count_int, bits_total, timestamps, period, bit_stream, done
-    
+    def receive_interrupt(sensor):
+        #print("Function triggered")
+        n_pulses=0
         
-    #calculate time difference since last interrupt and approximate how many pulses passed
-    timestamps[count_int] = time.perf_counter() #units = seconds
-    if count_int != 0:
-        time_diff = timestamps[count_int] - timestamps[count_int-1]
-        n_pulses = round(time_diff/period)  #make sure units match
-        bits_total = bits_total + n_pulses
-        #print(f'state= {state}, time_diff= {time_diff}, count_int= {count_int}, n_pulses= {n_pulses}, bits_total= {bits_total}')
+        #check state of the sensor
+        if not GPIO.input(sensor):
+            state = 1
+        else:
+            state = 0
 
-    if done:
-        #print('bit_stream: ', bit_stream)
-        bits_to_decode = bit_stream[2:(bits_total-10)]
-        print(bits_to_decode)
-        # bits_to_decode
-        #print(bits_total, len(bits_to_decode))s
-        decodedArray = decode(bits_to_decode)
-        textArray = binary_to_ascii(decodedArray)
-        #print("decodedArray:\n"+str(decodedArray))
-        print("textArray:\n"+str(textArray))
+        nonlocal count_int, bits_total, timestamps, period, bit_stream, done
+        
+            
+        #calculate time difference since last interrupt and approximate how many pulses passed
+        timestamps[count_int] = time.perf_counter() #units = seconds
+        if count_int != 0:
+            time_diff = timestamps[count_int] - timestamps[count_int-1]
+            n_pulses = round(time_diff/period)  #make sure units match
+            bits_total = bits_total + n_pulses
+            #print(f'state= {state}, time_diff= {time_diff}, count_int= {count_int}, n_pulses= {n_pulses}, bits_total= {bits_total}')
 
-        # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
-        done = 0
-        #print('timestamps: ', timestamps)
+        if done:
+            #print('bit_stream: ', bit_stream)
+            bits_to_decode = bit_stream[2:(bits_total-10)]
+            print(bits_to_decode)
+            # bits_to_decode
+            #print(bits_total, len(bits_to_decode))s
+            decodedArray = decode(bits_to_decode)
+            textArray = binary_to_ascii(decodedArray)
+            #print("decodedArray:\n"+str(decodedArray))
+            print("textArray:\n"+str(textArray))
 
-    #print message if seen a postamble
-    if (n_pulses>=9 and state==1):
-        done = 1
+            # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
+            done = 0
+            #print('timestamps: ', timestamps)
 
-    #store bits in the bit_stream
-    for i in range(n_pulses):
-        bit_stream[bits_total-i] = state
+        #print message if seen a postamble
+        if (n_pulses>=9 and state==1):
+            done = 1
 
-    #update 
-    count_int = count_int+1    
+        #store bits in the bit_stream
+        for i in range(n_pulses):
+            bit_stream[bits_total-i] = state
+
+        #update 
+        count_int = count_int+1
 
 
-# try:    
-GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt) #bouncetime = 1 worked for bitrate of 50
-# except: print("Ignore if working from PC. The detection function is not supported by the emulator.")
+try:    GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt) #bouncetime = 1 worked for bitrate of 50
+except: print("Ignore if working from PC. The detection function is not supported by the emulator.")
     # while True:
     #     t1 = time.perf_counter()
     #     sigValue = GPIO.input(3)
@@ -271,7 +268,7 @@ def sendData(str_message):
     print("Send complete. Total time to send: " + str(timeToSend) + " at " + str(bitrate) + " bits per second. The payload is " + str(bitSizePayload) + " bits.")
     
 
-GPIO.cleanup()  #Free up GPIO resources, return channels back to default.
+
 
 
 
@@ -300,7 +297,6 @@ while operate == True:
     )
 
     userInput = str(input("Choose from the following:\n1) Short Message\n2) Sentence\n3) Long Message\n4) Quit.\n"))
-
     if(userInput == '1'):
         trSend = Thread(target = sendData, args=[testMessage])
         trSend.start()
@@ -313,8 +309,8 @@ while operate == True:
     else:
         print("Quitting...")
         operate = False
+        GPIO.cleanup()  #Free up GPIO resources, return channels back to default.
         exit()
-
 
     while(trSend.is_alive()):
         time.sleep(0.1)
