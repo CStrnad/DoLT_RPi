@@ -227,7 +227,8 @@ def sendData(str_message):
     #Add preamble and postamble
     encodedArray = np.array(encodedMessage)
     preamble = np.array([1])
-    postamble = np.array([1,1,1,1,1,1,1,1,1,1,0,1])
+    # postamble = np.array([1,1,1,1,1,1,1,1,1,1,0,1])
+    postamble = np.array([1,1,1,1,1,1,1,1,1,1])
 
     withPre = np.append(preamble, encodedArray)
     payload = np.append(withPre, postamble)
