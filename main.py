@@ -167,7 +167,7 @@ def ptSensorInit():
         if(resetFlag == 1): resetBufferVars()
         
         print("Function triggered. 'done' is " + str(done) + "Flag is " + str(resetFlag))
-        if(resetFlag == 2): resetFlag = 1
+        
         # n_pulses=0
         
         #check state of the sensor
@@ -213,7 +213,7 @@ def ptSensorInit():
 
         #update 
         count_int = count_int+1
-        
+        if(resetFlag == 2): resetFlag = 1
         
 
     try: GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt) #bouncetime = 1 worked for bitrate of 50
