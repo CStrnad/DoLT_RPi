@@ -1,7 +1,7 @@
-try:
-    import RPi.GPIO as GPIO   #Used to interface with hardware GPIO pins on RPi.
-except:
-    from GPIOEmulator.EmulatorGUI import GPIO #import RPi.GPIO as GPIO import time import traceback
+# try:
+import RPi.GPIO as GPIO   #Used to interface with hardware GPIO pins on RPi.
+# except:
+#     from GPIOEmulator.EmulatorGUI import GPIO #import RPi.GPIO as GPIO import time import traceback
     #If error occurs in VSCode, use "pip install GPIOEmulator to add package"
 
 import time   #Simple time management library.
@@ -200,8 +200,9 @@ def ptSensorInit():
         count_int = count_int+1
 
 
-try:    GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt) #bouncetime = 1 worked for bitrate of 50
-except: print("Ignore if working from PC. The detection function is not supported by the emulator.")
+# try:    
+GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt) #bouncetime = 1 worked for bitrate of 50
+# except: print("Ignore if working from PC. The detection function is not supported by the emulator.")
     # while True:
     #     t1 = time.perf_counter()
     #     sigValue = GPIO.input(3)
