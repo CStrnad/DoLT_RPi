@@ -198,7 +198,7 @@ def ptSensorInit():
 
             # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
             done = 0
-            resetFlag = 2
+            resetFlag = 3
 
             # resetBufferVars()
             #print('timestamps: ', timestamps)
@@ -213,7 +213,7 @@ def ptSensorInit():
 
         #update 
         count_int = count_int+1
-        if(resetFlag == 2): resetFlag = 1
+        if(resetFlag > 1): resetFlag -= 1
         
 
     try: GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt) #bouncetime = 1 worked for bitrate of 50
