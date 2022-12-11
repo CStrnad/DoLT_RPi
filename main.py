@@ -200,7 +200,8 @@ def ptSensorInit():
         count_int = count_int+1
 
 
-    GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt) #bouncetime = 1 worked for bitrate of 50
+try:    GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt) #bouncetime = 1 worked for bitrate of 50
+except: print("Ignore if working from PC. The detection function is not supported by the emulator.")
     # while True:
     #     t1 = time.perf_counter()
     #     sigValue = GPIO.input(3)
@@ -227,7 +228,7 @@ initializeSensor = Thread(target= ptSensorInit)
 #TODO: Add 4B5B Functionality shit
 def sendData(str_message):
     print("Sending the following message: ", str_message)
-    print("Pausing for 2 seconds before sending. Length of message is " + str(len(str_message) + " chars."))
+    print("Pausing for 2 seconds before sending. Length of message is " + str(len(str_message)) + " chars.")
     time.sleep(2)
     logging.info("sendData: message to be transmitted is:\t" + str(str_message))
 
@@ -245,9 +246,10 @@ def sendData(str_message):
 
     withPre = np.append(preamble, encodedArray)
     payload = np.append(withPre, postamble)
+    bitSizePayload = len(payload)
     # print("Encoded message:\t"+ str(payload))
 
-    print("Buffed payload:\t" + str(payload))
+    # print("Buffed payload:\t" + str(payload))
     sendTimeStart = time.perf_counter()
     for i in range(len(payload)):
         GPIO.output(laser, int(payload[i]))
@@ -262,7 +264,8 @@ def sendData(str_message):
         #time.sleep(1/bitrate)
     GPIO.output(laser, 0) #Return transmitter to 0 at end.
     logging.info("sendData: Transmission complete. Killing thread.") 
-    print("Send complete. Total time to send: " + str(time.perf_counter()-sendTimeStart) + " at " + str(bitrate) + " bits per second.")
+    timeToSend = time.perf_counter() - sendTimeStart
+    print("Send complete. Total time to send: " + str(timeToSend) + " at " + str(bitrate) + " bits per second. The payload is " + str(bitSizePayload) + " bits.")
     
 
 GPIO.cleanup()  #Free up GPIO resources, return channels back to default.
@@ -281,11 +284,37 @@ testMessage3 = "The unanimous Declaration of the thirteen united States of Ameri
 testMessage4 = "We hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness.--That to secure these rights, Governments are instituted among Men, deriving their just powers from the consent of the governed, --That whenever any Form of Government becomes destructive of these ends, it is the Right of the People to alter or to abolish it, and to institute new Government, laying its foundation on such principles and organizing its powers in such form, as to them shall seem most likely to effect their Safety and Happiness. Prudence, indeed, will dictate that Governments long established should not be changed for light and transient causes; and accordingly all experience hath shewn, that mankind are more disposed to suffer, while evils are sufferable, than to right themselves by abolishing the forms to which they are accustomed. But when a long train of abuses and usurpations, pursuing invariably the same Object evinces a design to reduce them under absolute Despotism, it is their right, it is their duty, to throw off such Government, and to provide new Guards for their future security.--Such has been the patient sufferance of these Colonies; and such is now the necessity which constrains them to alter their former Systems of Government. The history of the present King of Great Britain is a history of repeated injuries and usurpations, all having in direct object the establishment of an absolute Tyranny over these States. To prove this, let Facts be submitted to a candid world."
 #testMessage4 is 2104 chars w/ whitespaces
 
-while True:
-    # consoleInput = str(input("Enter message to send or type quit: "))
-    consoleInput = testMessage4
-    trSend = Thread(target = sendData, args=[consoleInput])
-    trSend.start()
-    
 
-    time.sleep(6000)
+
+operate = True
+while operate == True:
+    
+    print(
+        "There are three options of text to be sent:\n" + 
+        "1) Short message \"Hello World!\"\n" + 
+        "2) Medium-Length Sentence\n" + 
+        "3) Long message: First two paragraphs of the declaration of Independence\n"
+    )
+
+    match(str(input("Choose from the following:\n1) Short Message\n2) Sentence\n3) Long Message\n4) Quit.\n"))):
+        case('1'):
+            trSend = Thread(target = sendData, args=[testMessage])
+            trSend.start()
+        case('2'):
+            trSend = Thread(target = sendData, args=[testMessage2])
+            trSend.start()
+        case('3'):
+            trSend = Thread(target = sendData, args=[testMessage3])
+            trSend.start()
+        case _:
+            print("Quitting...")
+            operate = False
+            exit()
+
+    while(trSend.is_alive()):
+        time.sleep(0.1)
+
+    # consoleInput = testMessage4
+    # trSend = Thread(target = sendData, args=[consoleInput])
+    
+    #time.sleep(10)
