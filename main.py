@@ -160,6 +160,7 @@ def ptSensorInit():
         bit_stream = [0]*(bitStreamDesignator) #recorded bits
 
     def receive_interrupt(sensor):
+        nonlocal count_int, bits_total, timestamps, period, bit_stream, done, n_pulses
         print("Function triggered")
         if(done == 2): resetBufferVars
         # n_pulses=0
@@ -169,8 +170,6 @@ def ptSensorInit():
             state = 1
         else:
             state = 0
-
-        nonlocal count_int, bits_total, timestamps, period, bit_stream, done, n_pulses
         
         #calculate time difference since last interrupt and approximate how many pulses passed
         timestamps[count_int] = time.perf_counter() #units = seconds
