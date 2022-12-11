@@ -296,20 +296,22 @@ while operate == True:
         "3) Long message: First two paragraphs of the declaration of Independence\n"
     )
 
-    switch(str(input("Choose from the following:\n1) Short Message\n2) Sentence\n3) Long Message\n4) Quit.\n"))):
-        case('1'):
-            trSend = Thread(target = sendData, args=[testMessage])
-            trSend.start()
-        case('2'):
-            trSend = Thread(target = sendData, args=[testMessage2])
-            trSend.start()
-        case('3'):
-            trSend = Thread(target = sendData, args=[testMessage3])
-            trSend.start()
-        case _:
-            print("Quitting...")
-            operate = False
-            exit()
+    userInput = str(input("Choose from the following:\n1) Short Message\n2) Sentence\n3) Long Message\n4) Quit.\n"))
+
+    if(userInput == '1'):
+        trSend = Thread(target = sendData, args=[testMessage])
+        trSend.start()
+    elif(userInput == '2'):
+        trSend = Thread(target = sendData, args=[testMessage2])
+        trSend.start()
+    elif(userInput == '3'):
+        trSend = Thread(target = sendData, args=[testMessage3])
+        trSend.start()
+    else:
+        print("Quitting...")
+        operate = False
+        exit()
+
 
     while(trSend.is_alive()):
         time.sleep(0.1)
