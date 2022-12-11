@@ -192,7 +192,10 @@ def ptSensorInit():
 
         #update 
         count_int = count_int+1
-    try:    GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt) #bouncetime = 1 worked for bitrate of 50
+
+    try:    
+        GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt) #bouncetime = 1 worked for bitrate of 50
+        print("TRIGGER MECHANISM IS RUN")
     except: print("Ignore if working from PC. The detection function is not supported by the emulator.")
 
 
