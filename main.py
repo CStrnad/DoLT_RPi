@@ -204,6 +204,8 @@ def ptSensorInit():
             print(bits_to_decode)
             print("Message Received:\n"+str(textArray))
             #print(f'timing_errors: {timing_error}')
+            print(timestamps[:50])
+            print(timing_error[:50])
             plt.plot(timestamps[:50], timing_error[:50])
             plt.show(block=True)
             plt.draw()
