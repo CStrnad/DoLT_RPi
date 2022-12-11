@@ -133,7 +133,7 @@ def ptSensorInit():
 
     bits_total = 0 #total received bits counter
     count_int = 0 #number of interrupts received
-    period = 1/(bitrate-300) #length of one pulse in seconds
+    period = 1/(bitrate-100) #length of one pulse in seconds
     timestamps = [0]*(expectedBitCount) #timestamps
     timing_error = [0]*(expectedBitCount) #pulse averaged bit time difference (from calculated with bitrate), synched with timestamps, used for timing stats analysis
     bit_stream = [0]*(bitStreamDesignator) #recorded bits
@@ -170,9 +170,10 @@ def ptSensorInit():
             print("\nMessage Received:\n"+str(textArray))
             #print(f'timing_errors: {timing_error}')
             #calculating bit time error and plotting it
-            plt.plot([(x-timestamps[2]) for x in timestamps[2:100]], timing_error[2:100])
+            plt.plot([(x-timestamps[2]) for x in timestamps[2:count_int]], timing_error[2:count_int])
             plt.xlabel('time /s')
             plt.ylabel('bit time inconsistency /us')
+            plt.title(f'Bit time error (bitrate={bitrate})')
             plt.show(block=True)
             plt.draw()
             plt.savefig('time_stats')
