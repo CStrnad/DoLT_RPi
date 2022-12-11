@@ -151,15 +151,17 @@ def ptSensorInit():
     timestamps = [0]*(expectedBitCount) #timestamps
     bit_stream = [0]*(bitStreamDesignator) #recorded bits
     done = 0
+    resetFlag = False
 
     def resetBufferVars():
-        nonlocal count_int, bits_total, timestamps, period, bit_stream, done
+        nonlocal count_int, bits_total, timestamps, period, bit_stream, done, resetFlag
         bits_total = count_int = done = 0
         timestamps = [0]*(expectedBitCount) #timestamps
         bit_stream = [0]*(bitStreamDesignator) #recorded bits
+        resetFlag = False
 
     def receive_interrupt(sensor):
-        nonlocal count_int, bits_total, timestamps, period, bit_stream, done
+        nonlocal count_int, bits_total, timestamps, period, bit_stream, done, resetFlag
         n_pulses = 0
         if(resetFlag): resetBufferVars
         print("Function triggered. 'done' is " + str(done))
