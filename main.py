@@ -146,6 +146,12 @@ def ptSensorInit():
     bit_stream = [0]*(800000) #recorded bits
     done = 0
 
+    def resetBufferVars():
+        nonlocal count_int, bits_total, timestamps, period, bit_stream, done
+        bits_total, count_int, done = 0
+        timestamps.clear()
+        bit_stream.clear()
+
     def receive_interrupt(sensor):
         print("Function triggered")
         n_pulses=0
@@ -158,7 +164,6 @@ def ptSensorInit():
 
         nonlocal count_int, bits_total, timestamps, period, bit_stream, done
         
-            
         #calculate time difference since last interrupt and approximate how many pulses passed
         timestamps[count_int] = time.perf_counter() #units = seconds
         if count_int != 0:
@@ -180,6 +185,7 @@ def ptSensorInit():
 
             # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
             done = 0
+            resetBufferVars()
             #print('timestamps: ', timestamps)
 
         #print message if seen a postamble
@@ -198,14 +204,8 @@ def ptSensorInit():
         print("TRIGGER MECHANISM IS RUN")
     except: print("Ignore if working from PC. The detection function is not supported by the emulator.")
 
-
-#The sensor is initiated above and will constantly take polls at the predefined bitrate that the sending function also uses. This should catch everything (fingers crossed)
-#TODO: Identify start/stop bits and catch those.
-#Pseudo Code follows:
-
 initializeSensor = Thread(target= ptSensorInit)
 
-#TODO: Add 4B5B Functionality shit
 def sendData(str_message):
     print("Sending the following message: ", str_message)
     print("Pausing for 2 seconds before sending. Length of message is " + str(len(str_message)) + " chars.")
@@ -305,16 +305,3 @@ while operate == True:
 
     elif(functionality == 'receive'):
         time.sleep(6000)
-
-    
-    # consoleInput = testMessage2
-    # trSend = Thread(target = sendData, args=[consoleInput])
-    # trSend.start()
-    # time.sleep(6000)
-
-    
-
-    # consoleInput = testMessage4
-    # trSend = Thread(target = sendData, args=[consoleInput])
-    
-    #time.sleep(10)
