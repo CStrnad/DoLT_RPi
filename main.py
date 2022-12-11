@@ -198,30 +198,13 @@ def ptSensorInit():
 
         #update 
         count_int = count_int+1
-
-
-try:    GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt) #bouncetime = 1 worked for bitrate of 50
-except: print("Ignore if working from PC. The detection function is not supported by the emulator.")
-    # while True:
-    #     t1 = time.perf_counter()
-    #     sigValue = GPIO.input(3)
-    #     t2 = time.perf_counter()
-    #     print("Time to poll:\t" + str(t2-t1))
-    #     #TODO: Add long ass array to catch all input. Need to make it fill and then start pruning end of array as the max size is reached.
-    #     time.sleep(1/bitrate)
-
+    try:    GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt) #bouncetime = 1 worked for bitrate of 50
+    except: print("Ignore if working from PC. The detection function is not supported by the emulator.")
 
 
 #The sensor is initiated above and will constantly take polls at the predefined bitrate that the sending function also uses. This should catch everything (fingers crossed)
 #TODO: Identify start/stop bits and catch those.
 #Pseudo Code follows:
-""" From buffer, if start symbol detected:
-    Create second buffer and append data following the start symbol
-    Keep appending until -> stop symbol is detected:
-        Once stop symbol detected, send captured 2nd buffer to be processed and clear main buffer """
-
-
-
 
 initializeSensor = Thread(target= ptSensorInit)
 
@@ -266,17 +249,15 @@ def sendData(str_message):
     logging.info("sendData: Transmission complete. Killing thread.") 
     timeToSend = time.perf_counter() - sendTimeStart
     print("Send complete. Total time to send: " + str(timeToSend) + " at " + str(bitrate) + " bits per second. The payload is " + str(bitSizePayload) + " bits.")
-    
-
-
-
-
 
 #Main
 setupHardware()
 initializeSensor.start()
 
-testMessage = "Cock Sucker!!!"
+
+
+
+testMessage = "Hello World!"
 testMessage2 = "If you're visiting this page, you're likely here because you're searching for a random sentence."
 testMessage3 = "The unanimous Declaration of the thirteen united States of America, When in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature's God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation."
 #testMessage3 is 474 chars
