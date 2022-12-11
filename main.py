@@ -201,7 +201,7 @@ def ptSensorInit():
             #clear_console()
             print(bits_to_decode)
             print("Message Received:\n"+str(textArray))
-            print(f'timing_errors: {timing_error}')
+            #print(f'timing_errors: {timing_error}')
 
             # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
             done = 0
