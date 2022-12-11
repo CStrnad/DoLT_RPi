@@ -29,7 +29,7 @@ sensor = 3
 #Function serves to set up hardware for RPi
 def setupHardware():
     #Indicate to GPIO library to utilize Board Pin Designations
-    GPIO.setmode(GPIO.BCM)
+    GPIO.setmode(GPIO.BOARD)
 
     #Define Pin-Interface mode
     GPIO.setup(sensor, GPIO.IN)  #Sensor Input
