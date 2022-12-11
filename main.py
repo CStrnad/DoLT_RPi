@@ -295,12 +295,12 @@ def mainMenu():
     else:
         GPIO.cleanup()
         exit()
+    clear_console()
     return(functionality)
 functionality = mainMenu()
 
 operate = True
 while operate == True:
-    clear_console()
     
     if(functionality == 'transmit'):
         print(
