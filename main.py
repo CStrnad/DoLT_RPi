@@ -166,11 +166,11 @@ def ptSensorInit():
     #     print("Resetting Vars")
 
     def receive_interrupt(sensor):
-        nonlocal count_int, bits_total, timestamps, period, bit_stream, done, resetFlag
+        nonlocal count_int, bits_total, timestamps, period, bit_stream, done #, resetFlag
         n_pulses = 0
         #print("Function triggered. 'done' is " + str(done) + " Flag is " + str(resetFlag))
         #if(resetFlag == 1): resetBufferVars()
-        if(resetFlag > 1): resetFlag -= 1
+        # if(resetFlag > 1): resetFlag -= 1
         
         
         
