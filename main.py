@@ -148,34 +148,18 @@ def ptSensorInit():
     expectedBitCount = expectedCharCount * 10
     bitStreamDesignator = expectedBitCount * 16
 
-    bits_total = 0
+    bits_total = 0 #total received bits counter
     count_int = 0 #number of interrupts received
     period = 1/bitrate #length of one pulse in seconds
     timestamps = [0]*(expectedBitCount) #timestamps
     timing_error = [0]*(expectedBitCount) #pulse averaged bit time difference (from calculated with bitrate), synched with timestamps, used for timing stats analysis
     bit_stream = [0]*(bitStreamDesignator) #recorded bits
     done = 0
-    #resetFlag = 0
-
-    # def resetBufferVars():
-    #     nonlocal count_int, bits_total, timestamps, period, bit_stream, done #, resetFlag
-    #     bits_total = count_int = done = 0
-    #     timestamps = [0]*(expectedBitCount) #timestamps
-    #     bit_stream = [0]*(bitStreamDesignator) #recorded bits
-    #     #resetFlag = 0
-    #     print("Resetting Vars")
 
     def receive_interrupt(sensor):
-        nonlocal count_int, bits_total, timestamps, period, bit_stream, done #, resetFlag
+        nonlocal count_int, bits_total, timestamps, period, bit_stream, done
         n_pulses = 0
-        #print("Function triggered. 'done' is " + str(done) + " Flag is " + str(resetFlag))
-        #if(resetFlag == 1): resetBufferVars()
-       # if(resetFlag > 1): resetFlag -= 1
-        
-        
-        
-        # n_pulses=0
-        
+
         #check state of the sensor
         if not GPIO.input(sensor):
             state = 1
@@ -195,12 +179,8 @@ def ptSensorInit():
             GPIO.remove_event_detect(sensor)
             #print('bit_stream: ', bit_stream)
             bits_to_decode = bit_stream[2:(bits_total-10)]
-            # bits_to_decode
-            #print(bits_total, len(bits_to_decode))s
             decodedArray = decode(bits_to_decode)
             textArray = binary_to_ascii(decodedArray)
-            #print("decodedArray:\n"+str(decodedArray))
-            #clear_console()
             print(bits_to_decode)
             print("Message Received:\n"+str(textArray))
             #print(f'timing_errors: {timing_error}')
@@ -210,16 +190,8 @@ def ptSensorInit():
             plt.show(block=True)
             plt.draw()
             plt.savefig('time_stats')
- 
-
-            # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
             done = 0
-           # resetFlag = 2
             ptSensorInit()
-
-            # resetBufferVars()
-            #print('timestamps: ', timestamps)
-
 
         #print message if seen a postamble
         if (n_pulses>=9 and state==1):
@@ -229,10 +201,8 @@ def ptSensorInit():
         for i in range(n_pulses):
             bit_stream[bits_total-i] = state
 
-        #update 
-        count_int = count_int+1
-        
-        
+        #update interrupt counter
+        count_int = count_int+1      
 
     try: GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt) #bouncetime = 1 worked for bitrate of 50
     except: print("Ignore if working from PC. The detection function is not supported by the emulator.")
