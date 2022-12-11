@@ -10,7 +10,11 @@ import logging   #Python logging facility for debugging and stuff
 import binascii
 import numpy as np
 from time import perf_counter
+import os
 
+def clear_console():
+    try: os.system('cls')
+    except: os.system('clear')
 
 #Initiate logging
 logging.basicConfig(
@@ -181,7 +185,8 @@ def ptSensorInit():
             decodedArray = decode(bits_to_decode)
             textArray = binary_to_ascii(decodedArray)
             #print("decodedArray:\n"+str(decodedArray))
-            print("textArray:\n"+str(textArray))
+            clear_console()
+            print("Message Received:\n"+str(textArray))
 
             # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
             done = 0
@@ -199,9 +204,7 @@ def ptSensorInit():
         #update 
         count_int = count_int+1
 
-    try:    
-        GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt) #bouncetime = 1 worked for bitrate of 50
-        print("TRIGGER MECHANISM IS RUN")
+    try: GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt) #bouncetime = 1 worked for bitrate of 50
     except: print("Ignore if working from PC. The detection function is not supported by the emulator.")
 
 initializeSensor = Thread(target= ptSensorInit)
@@ -275,7 +278,7 @@ else:
 
 operate = True
 while operate == True:
-    
+    clear_console()
     if(functionality == 'transmit'):
         print(
             "There are three options of text to be sent:\n" + 
