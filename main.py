@@ -147,7 +147,7 @@ def ptSensorInit():
     done = 0
 
     def receive_interrupt(sensor):
-        #print("Function triggered")
+        print("Function triggered")
         n_pulses=0
         
         #check state of the sensor
