@@ -167,10 +167,10 @@ def ptSensorInit():
             try: 
                 decodedArray = decode(bits_to_decode)
                 textArray = binary_to_ascii(decodedArray)
+                clear_console()
                 print("\nMessage Received:\n"+str(textArray))
             except: print("Error in decoding. Likely due to phasic latency."); pass
             #print(bits_to_decode)
-            clear_console()
             #print(f'timing_errors: {timing_error}')
             #calculating bit time error and plotting it
             plt.plot([(x-timestamps[2]) for x in timestamps[2:count_int]], timing_error[2:count_int])
