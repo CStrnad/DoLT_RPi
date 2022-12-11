@@ -406,7 +406,7 @@ while operate == True:
         elif(userInput == '4'):
             trSend = Thread(target = sendData, args=[testMessage5])
             trSend.start()
-        elif(userInput == '4'):
+        elif(userInput == '5'):
             customString = input("\nEnter custom text:\n")
             trSend = Thread(target = sendData, args=[customString])
             trSend.start()
