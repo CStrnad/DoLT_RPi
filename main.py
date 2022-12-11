@@ -24,6 +24,7 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S',
 )
 logging.info("Program initiating.")
+global bitrate
 bitrate = 500 #bits per second or laser switches per second
 
 #Identify GPIO pin association with hardware.
@@ -165,7 +166,7 @@ def ptSensorInit():
         nonlocal count_int, bits_total, timestamps, period, bit_stream, done, resetFlag
         n_pulses = 0
         print("Function triggered. 'done' is " + str(done) + " Flag is " + str(resetFlag))
-        if(resetFlag == 1): resetBufferVars()
+        #if(resetFlag == 1): resetBufferVars()
         if(resetFlag > 1): resetFlag -= 1
         
         
@@ -277,21 +278,29 @@ testMessage3 = "The unanimous Declaration of the thirteen united States of Ameri
 testMessage4 = "We hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness.--That to secure these rights, Governments are instituted among Men, deriving their just powers from the consent of the governed, --That whenever any Form of Government becomes destructive of these ends, it is the Right of the People to alter or to abolish it, and to institute new Government, laying its foundation on such principles and organizing its powers in such form, as to them shall seem most likely to effect their Safety and Happiness. Prudence, indeed, will dictate that Governments long established should not be changed for light and transient causes; and accordingly all experience hath shewn, that mankind are more disposed to suffer, while evils are sufferable, than to right themselves by abolishing the forms to which they are accustomed. But when a long train of abuses and usurpations, pursuing invariably the same Object evinces a design to reduce them under absolute Despotism, it is their right, it is their duty, to throw off such Government, and to provide new Guards for their future security.--Such has been the patient sufferance of these Colonies; and such is now the necessity which constrains them to alter their former Systems of Government. The history of the present King of Great Britain is a history of repeated injuries and usurpations, all having in direct object the establishment of an absolute Tyranny over these States. To prove this, let Facts be submitted to a candid world."
 #testMessage4 is 2104 chars w/ whitespaces
 
-transmissionMode = str(input("Choose from the following options:\n1) Transmit Mode\n2) Receive Mode\n3) Exit Program.\n"))
-if(transmissionMode == "1"):
-    functionality = "transmit"
-    print("Entering Transmit Mode...")
-elif(transmissionMode == "2"):
-    functionality = "receive"
-    print("Entering Receive Mode...")
-    initializeSensor.start()
-else:
-    GPIO.cleanup()
-    exit()
+def mainMenu():
+    functionality = ''
+    transmissionMode = str(input("Choose from the following options:\n1) Transmit Mode\n2) Receive Mode\n3) Change bitRate (Default is 500)\nOr press Enter to exit the program.\n"))
+    if(transmissionMode == "1"):
+        functionality = "transmit"
+        print("Entering Transmit Mode...")
+    elif(transmissionMode == "2"):
+        functionality = "receive"
+        print("Entering Receive Mode...")
+        initializeSensor.start()
+    elif(transmissionMode == "3"):
+        newBitRate = input("Default *stable* bitrate is 500. Enter new bitrate:\t")
+        bitrate = newBitRate
+        mainMenu()
+    else:
+        GPIO.cleanup()
+        exit()
+    return(functionality)
 
 operate = True
 while operate == True:
     clear_console()
+    functionality = mainMenu()
     if(functionality == 'transmit'):
         print(
             "There are three options of text to be sent:\n" + 
