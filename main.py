@@ -14,7 +14,7 @@ import os
 import matplotlib.pyplot as plt
 
 global bitrate
-bitrate = 3500 #bits per second or laser switches per second
+bitrate = 4000 #bits per second or laser switches per second
 
 
 def clear_console():
@@ -169,7 +169,10 @@ def ptSensorInit():
                 textArray = binary_to_ascii(decodedArray)
                 clear_console()
                 print("\nMessage Received:\n"+str(textArray))
-            except: print("Error in decoding. Likely due to phasic latency."); pass
+            except: 
+                clear_console()
+                print("Error in decoding. Likely due to phasic latency.")
+                pass
             #print(bits_to_decode)
             #print(f'timing_errors: {timing_error}')
             #calculating bit time error and plotting it
