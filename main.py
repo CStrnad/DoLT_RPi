@@ -415,4 +415,5 @@ while operate == True:
     elif(functionality == 'receive'):
         clear_console()
         print("Ready to receive data.")
+        input("Press any key to quit...")
         time.sleep(6000)
