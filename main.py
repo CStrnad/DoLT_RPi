@@ -27,7 +27,7 @@ logging.basicConfig(
 )
 logging.info("Program initiating.")
 global bitrate
-bitrate = 2500 #bits per second or laser switches per second
+bitrate = 3500 #bits per second or laser switches per second
 
 #Identify GPIO pin association with hardware.
 laser = 2
@@ -132,7 +132,7 @@ def ptSensorInit():
 
     bits_total = 0 #total received bits counter
     count_int = 0 #number of interrupts received
-    period = 1/(bitrate-15) #length of one pulse in seconds
+    period = 1/(bitrate-25) #length of one pulse in seconds
     timestamps = [0]*(expectedBitCount) #timestamps
     timing_error = [0]*(expectedBitCount) #pulse averaged bit time difference (from calculated with bitrate), synched with timestamps, used for timing stats analysis
     bit_stream = [0]*(bitStreamDesignator) #recorded bits
@@ -165,7 +165,8 @@ def ptSensorInit():
             decodedArray = decode(bits_to_decode)
             textArray = binary_to_ascii(decodedArray)
             #print(bits_to_decode)
-            print("Message Received:\n"+str(textArray))
+            clear_console()
+            print("\nMessage Received:\n"+str(textArray))
             #print(f'timing_errors: {timing_error}')
             #calculating bit time error and plotting it
             plt.plot([(x-timestamps[2]) for x in timestamps[2:100]], timing_error[2:100])
@@ -410,9 +411,11 @@ while operate == True:
 
         while(trSend.is_alive()):
             time.sleep(0.1)
-        time.sleep(2)
+        input("Press any key to continue...")
 
     elif(functionality == 'receive'):
         clear_console()
         print("Ready to receive data.")
         input("Press any key to quit...")
+        GPIO.cleanup()
+        exit()
