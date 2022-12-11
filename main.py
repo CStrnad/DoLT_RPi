@@ -159,6 +159,7 @@ def ptSensorInit():
         timestamps = [0]*(expectedBitCount) #timestamps
         bit_stream = [0]*(bitStreamDesignator) #recorded bits
         resetFlag = 0
+        print("Resetting Vars")
 
     def receive_interrupt(sensor):
         nonlocal count_int, bits_total, timestamps, period, bit_stream, done, resetFlag
