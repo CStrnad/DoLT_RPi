@@ -13,6 +13,9 @@ from time import perf_counter
 import os
 import matplotlib.pyplot as plt
 
+global bitrate
+bitrate = 5000 #bits per second or laser switches per second
+
 
 def clear_console():
     try: os.system('clear')
@@ -26,8 +29,6 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S',
 )
 logging.info("Program initiating.")
-global bitrate
-bitrate = 3500 #bits per second or laser switches per second
 
 #Identify GPIO pin association with hardware.
 laser = 2
