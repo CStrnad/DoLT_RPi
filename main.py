@@ -150,6 +150,7 @@ def ptSensorInit():
     count_int = 0 #number of interrupts received
     period = 1/bitrate #length of one pulse in seconds
     timestamps = [0]*(expectedBitCount) #timestamps
+    timing_error = [0]*(expectedBitCount)
     bit_stream = [0]*(bitStreamDesignator) #recorded bits
     done = 0
     resetFlag = 0
@@ -185,6 +186,7 @@ def ptSensorInit():
             time_diff = timestamps[count_int] - timestamps[count_int-1]
             n_pulses = round(time_diff/period)  #make sure units match
             bits_total = bits_total + n_pulses
+            timing_error[count_int] = time_diff/n_pulses - 1/bitrate
             #print(f'state= {state}, time_diff= {time_diff}, count_int= {count_int}, n_pulses= {n_pulses}, bits_total= {bits_total}')
 
         if done:
@@ -198,6 +200,7 @@ def ptSensorInit():
             #clear_console()
             print(bits_to_decode)
             print("Message Received:\n"+str(textArray))
+            print(f'timing_errors: {timing_error}')
 
             # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
             done = 0
