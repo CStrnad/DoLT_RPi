@@ -157,13 +157,13 @@ def ptSensorInit():
     done = 0
     #resetFlag = 0
 
-    def resetBufferVars():
-        nonlocal count_int, bits_total, timestamps, period, bit_stream, done #, resetFlag
-        bits_total = count_int = done = 0
-        timestamps = [0]*(expectedBitCount) #timestamps
-        bit_stream = [0]*(bitStreamDesignator) #recorded bits
-        #resetFlag = 0
-        print("Resetting Vars")
+    # def resetBufferVars():
+    #     nonlocal count_int, bits_total, timestamps, period, bit_stream, done #, resetFlag
+    #     bits_total = count_int = done = 0
+    #     timestamps = [0]*(expectedBitCount) #timestamps
+    #     bit_stream = [0]*(bitStreamDesignator) #recorded bits
+    #     #resetFlag = 0
+    #     print("Resetting Vars")
 
     def receive_interrupt(sensor):
         nonlocal count_int, bits_total, timestamps, period, bit_stream, done #, resetFlag
@@ -204,6 +204,7 @@ def ptSensorInit():
             print(bits_to_decode)
             print("Message Received:\n"+str(textArray))
             #print(f'timing_errors: {timing_error}')
+            plt.plot(timestamps[:50], timing_error[:50])
 
             # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
             done = 0
