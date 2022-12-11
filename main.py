@@ -278,30 +278,89 @@ testMessage3 = "The unanimous Declaration of the thirteen united States of Ameri
 testMessage4 = "We hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness.--That to secure these rights, Governments are instituted among Men, deriving their just powers from the consent of the governed, --That whenever any Form of Government becomes destructive of these ends, it is the Right of the People to alter or to abolish it, and to institute new Government, laying its foundation on such principles and organizing its powers in such form, as to them shall seem most likely to effect their Safety and Happiness. Prudence, indeed, will dictate that Governments long established should not be changed for light and transient causes; and accordingly all experience hath shewn, that mankind are more disposed to suffer, while evils are sufferable, than to right themselves by abolishing the forms to which they are accustomed. But when a long train of abuses and usurpations, pursuing invariably the same Object evinces a design to reduce them under absolute Despotism, it is their right, it is their duty, to throw off such Government, and to provide new Guards for their future security.--Such has been the patient sufferance of these Colonies; and such is now the necessity which constrains them to alter their former Systems of Government. The history of the present King of Great Britain is a history of repeated injuries and usurpations, all having in direct object the establishment of an absolute Tyranny over these States. To prove this, let Facts be submitted to a candid world."
 #testMessage4 is 2104 chars w/ whitespaces
 
-def mainMenu():
-    functionality = ''
-    transmissionMode = str(input("Choose from the following options:\n1) Transmit Mode\n2) Receive Mode\n3) Change bitRate (Default is 500)\nOr press Enter to exit the program.\n"))
-    if(transmissionMode == "1"):
-        functionality = "transmit"
-        print("Entering Transmit Mode...")
-    elif(transmissionMode == "2"):
-        functionality = "receive"
-        print("Entering Receive Mode...")
-        initializeSensor.start()
-    elif(transmissionMode == "3"):
-        newBitRate = input("Default *stable* bitrate is 500. Enter new bitrate:\t")
-        bitrate = newBitRate
-        mainMenu()
-    else:
-        GPIO.cleanup()
-        exit()
-    clear_console()
-    return(functionality)
-functionality = mainMenu()
+# def mainMenu():
+#     functionality = ''
+#     transmissionMode = str(input("Choose from the following options:\n1) Transmit Mode\n2) Receive Mode\n3) Change bitRate (Default is 500)\nOr press Enter to exit the program.\n"))
+#     if(transmissionMode == "1"):
+#         functionality = "transmit"
+#         print("Entering Transmit Mode...")
+#     elif(transmissionMode == "2"):
+#         functionality = "receive"
+#         print("Entering Receive Mode...")
+#         initializeSensor.start()
+#     elif(transmissionMode == "3"):
+#         newBitRate = input("Default *stable* bitrate is 500. Enter new bitrate:\t")
+#         bitrate = newBitRate
+#         mainMenu()
+#     else:
+#         GPIO.cleanup()
+#         exit()
+#     clear_console()
+#     return(functionality)
+# functionality = mainMenu()
+
+# transmissionMode = str(input("Choose from the following options:\n1) Transmit Mode\n2) Receive Mode\n3) Exit Program.\n"))
+# if(transmissionMode == "1"):
+#     functionality = "transmit"
+#     print("Entering Transmit Mode...")
+# elif(transmissionMode == "2"):
+#     functionality = "receive"
+#     print("Entering Receive Mode...")
+#     initializeSensor.start()
+# else:
+#     GPIO.cleanup()
+#     exit()
+
+# operate = True
+# while operate == True:
+    
+#     if(functionality == 'transmit'):
+#         print(
+#             "There are three options of text to be sent:\n" + 
+#             "1) Short message \"Hello World!\"\n" + 
+#             "2) Medium-Length Sentence\n" + 
+#             "3) Long message: First two paragraphs of the declaration of Independence\n"
+#         )
+
+#         userInput = str(input("Choose from the following:\n1) Short Message\n2) Sentence\n3) Long Message\n4) Quit.\n"))
+#         if(userInput == '1'):
+#             trSend = Thread(target = sendData, args=[testMessage])
+#             trSend.start()
+#         elif(userInput == '2'):
+#             trSend = Thread(target = sendData, args=[testMessage2])
+#             trSend.start()
+#         elif(userInput == '3'):
+#             trSend = Thread(target = sendData, args=[testMessage3])
+#             trSend.start()
+#         else:
+#             print("Quitting...")
+#             operate = False
+#             GPIO.cleanup()  #Free up GPIO resources, return channels back to default.
+#             exit()
+
+#         while(trSend.is_alive()):
+#             time.sleep(0.1)
+
+#     elif(functionality == 'receive'):
+#         clear_console()
+#         print("Ready to receive data.")
+#         time.sleep(6000)
+
+transmissionMode = str(input("Choose from the following options:\n1) Transmit Mode\n2) Receive Mode\n3) Exit Program.\n"))
+if(transmissionMode == "1"):
+    functionality = "transmit"
+    print("Entering Transmit Mode...")
+elif(transmissionMode == "2"):
+    functionality = "receive"
+    print("Entering Receive Mode...")
+    initializeSensor.start()
+else:
+    GPIO.cleanup()
+    exit()
 
 operate = True
 while operate == True:
-    
+    clear_console()
     if(functionality == 'transmit'):
         print(
             "There are three options of text to be sent:\n" + 
