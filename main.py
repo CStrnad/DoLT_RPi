@@ -11,6 +11,8 @@ import binascii
 import numpy as np
 from time import perf_counter
 import os
+import matplotlib.pyplot as plt
+
 
 def clear_console():
     try: os.system('clear')
@@ -150,18 +152,18 @@ def ptSensorInit():
     count_int = 0 #number of interrupts received
     period = 1/bitrate #length of one pulse in seconds
     timestamps = [0]*(expectedBitCount) #timestamps
-    timing_error = [0]*(expectedBitCount)
+    timing_error = [0]*(expectedBitCount) #pulse averaged bit time difference (from calculated with bitrate), synched with timestamps, used for timing stats analysis
     bit_stream = [0]*(bitStreamDesignator) #recorded bits
     done = 0
-    resetFlag = 0
+    # resetFlag = 0
 
-    def resetBufferVars():
-        nonlocal count_int, bits_total, timestamps, period, bit_stream, done, resetFlag
-        bits_total = count_int = done = 0
-        timestamps = [0]*(expectedBitCount) #timestamps
-        bit_stream = [0]*(bitStreamDesignator) #recorded bits
-        resetFlag = 0
-        print("Resetting Vars")
+    # def resetBufferVars():
+    #     nonlocal count_int, bits_total, timestamps, period, bit_stream, done, resetFlag
+    #     bits_total = count_int = done = 0
+    #     timestamps = [0]*(expectedBitCount) #timestamps
+    #     bit_stream = [0]*(bitStreamDesignator) #recorded bits
+    #     resetFlag = 0
+    #     print("Resetting Vars")
 
     def receive_interrupt(sensor):
         nonlocal count_int, bits_total, timestamps, period, bit_stream, done, resetFlag
@@ -202,10 +204,11 @@ def ptSensorInit():
             print(bits_to_decode)
             print("Message Received:\n"+str(textArray))
             #print(f'timing_errors: {timing_error}')
+            plt.plot(timestamps[:50], timing_error[:50])
 
             # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
             done = 0
-            resetFlag = 2
+            # resetFlag = 2
             ptSensorInit()
 
             # resetBufferVars()
