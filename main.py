@@ -20,7 +20,7 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S',
 )
 logging.info("Program initiating.")
-bitrate = 50 #bits per second or laser switches per second
+bitrate = 500 #bits per second or laser switches per second
 
 #Identify GPIO pin association with hardware.
 laser = 2
@@ -148,7 +148,7 @@ def ptSensorInit():
 
     def resetBufferVars():
         nonlocal count_int, bits_total, timestamps, period, bit_stream, done
-        bits_total, count_int, done = 0
+        bits_total = count_int = done = 0
         timestamps.clear()
         bit_stream.clear()
 
@@ -208,8 +208,8 @@ initializeSensor = Thread(target= ptSensorInit)
 
 def sendData(str_message):
     print("Sending the following message: ", str_message)
-    print("Pausing for 2 seconds before sending. Length of message is " + str(len(str_message)) + " chars.")
-    time.sleep(2)
+    print("Pausing before sending. Length of message is " + str(len(str_message)) + " chars.")
+    time.sleep(0.5)
     logging.info("sendData: message to be transmitted is:\t" + str(str_message))
 
     binaryOfMessage = ""
@@ -304,4 +304,5 @@ while operate == True:
             time.sleep(0.1)
 
     elif(functionality == 'receive'):
+        print("Ready to receive data.")
         time.sleep(6000)
