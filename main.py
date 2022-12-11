@@ -267,28 +267,32 @@ testMessage4 = "We hold these truths to be self-evident, that all men are create
 operate = True
 while operate == True:
     
-    print(
-        "There are three options of text to be sent:\n" + 
-        "1) Short message \"Hello World!\"\n" + 
-        "2) Medium-Length Sentence\n" + 
-        "3) Long message: First two paragraphs of the declaration of Independence\n"
-    )
+    # print(
+    #     "There are three options of text to be sent:\n" + 
+    #     "1) Short message \"Hello World!\"\n" + 
+    #     "2) Medium-Length Sentence\n" + 
+    #     "3) Long message: First two paragraphs of the declaration of Independence\n"
+    # )
 
-    userInput = str(input("Choose from the following:\n1) Short Message\n2) Sentence\n3) Long Message\n4) Quit.\n"))
-    if(userInput == '1'):
-        trSend = Thread(target = sendData, args=[testMessage])
-        trSend.start()
-    elif(userInput == '2'):
-        trSend = Thread(target = sendData, args=[testMessage2])
-        trSend.start()
-    elif(userInput == '3'):
-        trSend = Thread(target = sendData, args=[testMessage3])
-        trSend.start()
-    else:
-        print("Quitting...")
-        operate = False
-        GPIO.cleanup()  #Free up GPIO resources, return channels back to default.
-        exit()
+    # userInput = str(input("Choose from the following:\n1) Short Message\n2) Sentence\n3) Long Message\n4) Quit.\n"))
+    # if(userInput == '1'):
+    #     trSend = Thread(target = sendData, args=[testMessage])
+    #     trSend.start()
+    # elif(userInput == '2'):
+    #     trSend = Thread(target = sendData, args=[testMessage2])
+    #     trSend.start()
+    # elif(userInput == '3'):
+    #     trSend = Thread(target = sendData, args=[testMessage3])
+    #     trSend.start()
+    # else:
+    #     print("Quitting...")
+    #     operate = False
+    #     GPIO.cleanup()  #Free up GPIO resources, return channels back to default.
+    #     exit()
+    consoleInput = testMessage2
+    trSend = Thread(target = sendData, args=[consoleInput])
+    trSend.start()
+    time.sleep(6000)
 
     # while(trSend.is_alive()):
     #     time.sleep(0.1)
