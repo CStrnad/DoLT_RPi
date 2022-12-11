@@ -151,16 +151,16 @@ def ptSensorInit():
     timestamps = [0]*(expectedBitCount) #timestamps
     bit_stream = [0]*(bitStreamDesignator) #recorded bits
     done = 0
-    n_pulses=0
 
     def resetBufferVars():
-        nonlocal count_int, bits_total, timestamps, period, bit_stream, done, n_pulses
-        bits_total = count_int = n_pulses = done = 0
+        nonlocal count_int, bits_total, timestamps, period, bit_stream, done
+        bits_total = count_int = done = 0
         timestamps = [0]*(expectedBitCount) #timestamps
         bit_stream = [0]*(bitStreamDesignator) #recorded bits
 
     def receive_interrupt(sensor):
-        nonlocal count_int, bits_total, timestamps, period, bit_stream, done, n_pulses
+        nonlocal count_int, bits_total, timestamps, period, bit_stream, done
+        n_pulses = 0
         if(done == 2): done = 3 #Expecting an additional pulse after last message. Not sure why but this should fix it.
         if(done == 3): resetBufferVars
         print("Function triggered. 'done' is " + str(done))
