@@ -389,7 +389,7 @@ while operate == True:
             "4) Mega long boi\n"
         )
 
-        userInput = str(input("Choose from the following:\n1) Short Message\n2) Sentence\n3) Long Message\n4) Quit.\n"))
+        userInput = str(input("Choose from the following:\n1) Short Message\n2) Sentence\n3) Long Message\n4) Ultra Long String\n5)Quit.\n"))
         if(userInput == '1'):
             trSend = Thread(target = sendData, args=[testMessage])
             trSend.start()
