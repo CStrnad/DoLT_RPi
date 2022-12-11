@@ -182,13 +182,13 @@ def ptSensorInit():
         if (done==1):
             #print('bit_stream: ', bit_stream)
             bits_to_decode = bit_stream[2:(bits_total-10)]
-            print(bits_to_decode)
             # bits_to_decode
             #print(bits_total, len(bits_to_decode))s
             decodedArray = decode(bits_to_decode)
             textArray = binary_to_ascii(decodedArray)
             #print("decodedArray:\n"+str(decodedArray))
             clear_console()
+            print(bits_to_decode)
             print("Message Received:\n"+str(textArray))
 
             # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
