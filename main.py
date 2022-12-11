@@ -130,10 +130,11 @@ def ptSensorInit():
     expectedCharCount = 10000 
     expectedBitCount = expectedCharCount * 10
     bitStreamDesignator = expectedBitCount * 16
+    phaseShift = 50
 
     bits_total = 0 #total received bits counter
     count_int = 0 #number of interrupts received
-    period = 1/(bitrate) #length of one pulse in seconds
+    period = 1/(bitrate-phaseShift) #length of one pulse in seconds
     timestamps = [0]*(expectedBitCount) #timestamps
     timing_error = [0]*(expectedBitCount) #pulse averaged bit time difference (from calculated with bitrate), synched with timestamps, used for timing stats analysis
     bit_stream = [0]*(bitStreamDesignator) #recorded bits
