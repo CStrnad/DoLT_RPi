@@ -27,7 +27,7 @@ logging.basicConfig(
 )
 logging.info("Program initiating.")
 global bitrate
-bitrate = 2000 #bits per second or laser switches per second
+bitrate = 2500 #bits per second or laser switches per second
 
 #Identify GPIO pin association with hardware.
 laser = 2
@@ -416,4 +416,3 @@ while operate == True:
         clear_console()
         print("Ready to receive data.")
         input("Press any key to quit...")
-        time.sleep(6000)
