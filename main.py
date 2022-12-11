@@ -145,59 +145,61 @@ def ptSensorInit():
 
     # expectedCharCount = 500 
     # expectedBitCount = expectedCharCount * 10
-    bits_total = 0
-    count_int = 0 #number of interrupts received
-    timestamps = [0]*(50000) #timestamps
-    period = 1/bitrate #length of one pulse in seconds
-    bit_stream = [0]*(800000) #recorded bits
-    done = 0
+    
+bits_total = 0
+count_int = 0 #number of interrupts received
+timestamps = [0]*(50000) #timestamps
+period = 1/bitrate #length of one pulse in seconds
+bit_stream = [0]*(800000) #recorded bits
+done = 0
 
-    def receive_interrupt(sensor):
-        #print("Function triggered")
-        n_pulses=0
+def receive_interrupt(sensor):
+    #print("Function triggered")
+    n_pulses=0
+    
+    #check state of the sensor
+    if not GPIO.input(sensor):
+        state = 1
+    else:
+        state = 0
+
+    # nonlocal 
+    count_int, bits_total, timestamps, period, bit_stream, done
+    
         
-        #check state of the sensor
-        if not GPIO.input(sensor):
-            state = 1
-        else:
-            state = 0
+    #calculate time difference since last interrupt and approximate how many pulses passed
+    timestamps[count_int] = time.perf_counter() #units = seconds
+    if count_int != 0:
+        time_diff = timestamps[count_int] - timestamps[count_int-1]
+        n_pulses = round(time_diff/period)  #make sure units match
+        bits_total = bits_total + n_pulses
+        #print(f'state= {state}, time_diff= {time_diff}, count_int= {count_int}, n_pulses= {n_pulses}, bits_total= {bits_total}')
 
-        nonlocal count_int, bits_total, timestamps, period, bit_stream, done
-        
-            
-        #calculate time difference since last interrupt and approximate how many pulses passed
-        timestamps[count_int] = time.perf_counter() #units = seconds
-        if count_int != 0:
-            time_diff = timestamps[count_int] - timestamps[count_int-1]
-            n_pulses = round(time_diff/period)  #make sure units match
-            bits_total = bits_total + n_pulses
-            #print(f'state= {state}, time_diff= {time_diff}, count_int= {count_int}, n_pulses= {n_pulses}, bits_total= {bits_total}')
+    if done:
+        #print('bit_stream: ', bit_stream)
+        bits_to_decode = bit_stream[2:(bits_total-10)]
+        print(bits_to_decode)
+        # bits_to_decode
+        #print(bits_total, len(bits_to_decode))s
+        decodedArray = decode(bits_to_decode)
+        textArray = binary_to_ascii(decodedArray)
+        #print("decodedArray:\n"+str(decodedArray))
+        print("textArray:\n"+str(textArray))
 
-        if done:
-            #print('bit_stream: ', bit_stream)
-            bits_to_decode = bit_stream[2:(bits_total-10)]
-            print(bits_to_decode)
-            # bits_to_decode
-            #print(bits_total, len(bits_to_decode))s
-            decodedArray = decode(bits_to_decode)
-            textArray = binary_to_ascii(decodedArray)
-            #print("decodedArray:\n"+str(decodedArray))
-            print("textArray:\n"+str(textArray))
+        # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
+        done = 0
+        #print('timestamps: ', timestamps)
 
-            # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
-            done = 0
-            #print('timestamps: ', timestamps)
+    #print message if seen a postamble
+    if (n_pulses>=9 and state==1):
+        done = 1
 
-        #print message if seen a postamble
-        if (n_pulses>=9 and state==1):
-            done = 1
+    #store bits in the bit_stream
+    for i in range(n_pulses):
+        bit_stream[bits_total-i] = state
 
-        #store bits in the bit_stream
-        for i in range(n_pulses):
-            bit_stream[bits_total-i] = state
-
-        #update 
-        count_int = count_int+1
+    #update 
+    count_int = count_int+1    
 
 
 # try:    
