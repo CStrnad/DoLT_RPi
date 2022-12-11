@@ -207,7 +207,7 @@ def ptSensorInit():
             plt.plot(timestamps[:50], timing_error[:50])
             plt.show(block=True)
             plt.draw()
-            plt.savefig()
+            plt.savefig('time stats')
 
             # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
             done = 0
