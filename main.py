@@ -13,8 +13,8 @@ from time import perf_counter
 import os
 
 def clear_console():
-    try: os.system('cls')
-    except: os.system('clear')
+    try: os.system('clear')
+    except: os.system('cls')
 
 #Initiate logging
 logging.basicConfig(
@@ -149,16 +149,17 @@ def ptSensorInit():
     period = 1/bitrate #length of one pulse in seconds
     bit_stream = [0]*(800000) #recorded bits
     done = 0
+    n_pulses=0
 
     def resetBufferVars():
-        nonlocal count_int, bits_total, timestamps, period, bit_stream, done
-        bits_total = count_int = done = 0
+        nonlocal count_int, bits_total, timestamps, period, bit_stream, done, n_pulses
+        bits_total = count_int = n_pulses = 0
         timestamps.clear()
         bit_stream.clear()
 
     def receive_interrupt(sensor):
         print("Function triggered")
-        n_pulses=0
+        # n_pulses=0
         
         #check state of the sensor
         if not GPIO.input(sensor):
@@ -166,7 +167,7 @@ def ptSensorInit():
         else:
             state = 0
 
-        nonlocal count_int, bits_total, timestamps, period, bit_stream, done
+        nonlocal count_int, bits_total, timestamps, period, bit_stream, done, n_pulses
         
         #calculate time difference since last interrupt and approximate how many pulses passed
         timestamps[count_int] = time.perf_counter() #units = seconds
