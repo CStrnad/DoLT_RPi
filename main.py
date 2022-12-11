@@ -296,11 +296,12 @@ def mainMenu():
         GPIO.cleanup()
         exit()
     return(functionality)
+functionality = mainMenu()
 
 operate = True
 while operate == True:
     clear_console()
-    functionality = mainMenu()
+    
     if(functionality == 'transmit'):
         print(
             "There are three options of text to be sent:\n" + 
