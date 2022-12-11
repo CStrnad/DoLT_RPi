@@ -164,9 +164,11 @@ def ptSensorInit():
             GPIO.remove_event_detect(sensor) #stop interrupts
             #print('bit_stream: ', bit_stream)
             bits_to_decode = bit_stream[2:(bits_total-10)] #remove pre- and postamble
-            try: decodedArray = decode(bits_to_decode)
+            try: 
+                decodedArray = decode(bits_to_decode)
+                textArray = binary_to_ascii(decodedArray)
             except: print("Error in decoding. Likely due to phasic latency."); pass
-            textArray = binary_to_ascii(decodedArray)
+            
             #print(bits_to_decode)
             clear_console()
             print("\nMessage Received:\n"+str(textArray))
