@@ -141,21 +141,23 @@ def binary_to_ascii(binaryArray):
 def ptSensorInit():
     logging.info("ptSensorInit: Sensor Initialized.")
 
-    # expectedCharCount = 500 
-    # expectedBitCount = expectedCharCount * 10
+    expectedCharCount = 5000 
+    expectedBitCount = expectedCharCount * 10
+    bitStreamDesignator = expectedBitCount * 16
+
     bits_total = 0
     count_int = 0 #number of interrupts received
-    timestamps = [0]*(50000) #timestamps
     period = 1/bitrate #length of one pulse in seconds
-    bit_stream = [0]*(800000) #recorded bits
+    timestamps = [0]*(expectedBitCount) #timestamps
+    bit_stream = [0]*(bitStreamDesignator) #recorded bits
     done = 0
     n_pulses=0
 
     def resetBufferVars():
         nonlocal count_int, bits_total, timestamps, period, bit_stream, done, n_pulses
         bits_total = count_int = n_pulses = 0
-        timestamps.clear()
-        bit_stream.clear()
+        timestamps = [0]*(expectedBitCount) #timestamps
+        bit_stream = [0]*(bitStreamDesignator) #recorded bits
 
     def receive_interrupt(sensor):
         print("Function triggered")
@@ -208,8 +210,6 @@ def ptSensorInit():
     try: GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt) #bouncetime = 1 worked for bitrate of 50
     except: print("Ignore if working from PC. The detection function is not supported by the emulator.")
 
-initializeSensor = Thread(target= ptSensorInit)
-
 def sendData(str_message):
     print("Sending the following message: ", str_message)
     print("Pausing before sending. Length of message is " + str(len(str_message)) + " chars.")
@@ -253,9 +253,8 @@ def sendData(str_message):
 
 #Main
 setupHardware()
-initializeSensor.start()
 
-
+initializeSensor = Thread(target= ptSensorInit)
 
 
 testMessage = "Hello World!"
@@ -273,6 +272,7 @@ if(transmissionMode == "1"):
 elif(transmissionMode == "2"):
     functionality = "receive"
     print("Entering Receive Mode...")
+    initializeSensor.start()
 else:
     GPIO.cleanup()
     exit()
@@ -308,5 +308,6 @@ while operate == True:
             time.sleep(0.1)
 
     elif(functionality == 'receive'):
+        clear_console()
         print("Ready to receive data.")
         time.sleep(6000)
