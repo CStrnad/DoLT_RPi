@@ -199,7 +199,7 @@ def ptSensorInit():
 
             # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
             done = 0
-            resetFlag = 2
+            resetFlag = 3
 
             # resetBufferVars()
             #print('timestamps: ', timestamps)
