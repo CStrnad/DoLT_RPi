@@ -20,7 +20,7 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S',
 )
 logging.info("Program initiating.")
-bitrate = 1500 #bits per second or laser switches per second
+bitrate = 50 #bits per second or laser switches per second
 
 #Identify GPIO pin association with hardware.
 laser = 2
@@ -134,12 +134,6 @@ def binary_to_ascii(binaryArray):
     binaryArray = ''.join(binaryArray)
     return binascii.unhexlify('%x' % int('0b' + binaryArray, 2)).decode("utf-8") 
 
-#GPIO.input(channel)    #Return 0 or 1 (High or Low)
-#GPIO.output(channel, state)    #Set channel to state.
-
-# correct_arr = [0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1]
-
-#yee
 def ptSensorInit():
     logging.info("ptSensorInit: Sensor Initialized.")
 
@@ -293,8 +287,8 @@ while operate == True:
         GPIO.cleanup()  #Free up GPIO resources, return channels back to default.
         exit()
 
-    while(trSend.is_alive()):
-        time.sleep(0.1)
+    # while(trSend.is_alive()):
+    #     time.sleep(0.1)
 
     # consoleInput = testMessage4
     # trSend = Thread(target = sendData, args=[consoleInput])
