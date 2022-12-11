@@ -155,7 +155,7 @@ def ptSensorInit():
 
     def resetBufferVars():
         nonlocal count_int, bits_total, timestamps, period, bit_stream, done, n_pulses
-        bits_total = count_int = n_pulses = 0
+        bits_total = count_int = n_pulses = done = 0
         timestamps = [0]*(expectedBitCount) #timestamps
         bit_stream = [0]*(bitStreamDesignator) #recorded bits
 
@@ -179,7 +179,7 @@ def ptSensorInit():
             bits_total = bits_total + n_pulses
             #print(f'state= {state}, time_diff= {time_diff}, count_int= {count_int}, n_pulses= {n_pulses}, bits_total= {bits_total}')
 
-        if done:
+        if (done==1):
             #print('bit_stream: ', bit_stream)
             bits_to_decode = bit_stream[2:(bits_total-10)]
             print(bits_to_decode)
@@ -192,8 +192,8 @@ def ptSensorInit():
             print("Message Received:\n"+str(textArray))
 
             # print("Case Test:\t"+ str(bits_to_decode==correct_arr))
-            done = 0
-            resetBufferVars()
+            done = 2 #was 1
+            # resetBufferVars()
             #print('timestamps: ', timestamps)
 
         #print message if seen a postamble
@@ -206,6 +206,7 @@ def ptSensorInit():
 
         #update 
         count_int = count_int+1
+        if(done == 2): resetBufferVars
 
     try: GPIO.add_event_detect(sensor, GPIO.BOTH, callback=receive_interrupt) #bouncetime = 1 worked for bitrate of 50
     except: print("Ignore if working from PC. The detection function is not supported by the emulator.")
