@@ -164,7 +164,7 @@ def ptSensorInit():
         nonlocal count_int, bits_total, timestamps, period, bit_stream, done, resetFlag
         n_pulses = 0
         if(resetFlag): resetBufferVars
-        print("Function triggered. 'done' is " + str(done))
+        print("Function triggered. 'done' is " + str(done) + "Flag is " + str(resetFlag))
         # n_pulses=0
         
         #check state of the sensor
@@ -189,7 +189,7 @@ def ptSensorInit():
             decodedArray = decode(bits_to_decode)
             textArray = binary_to_ascii(decodedArray)
             #print("decodedArray:\n"+str(decodedArray))
-            clear_console()
+            #clear_console()
             print(bits_to_decode)
             print("Message Received:\n"+str(textArray))
 
