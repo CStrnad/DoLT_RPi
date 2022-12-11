@@ -168,7 +168,7 @@ def ptSensorInit():
             print("Message Received:\n"+str(textArray))
             #print(f'timing_errors: {timing_error}')
             #calculating bit time error and plotting it
-            plt.plot([(x-timestamps[2]) for x in timestamps[2:1000]], timing_error[2:1000])
+            plt.plot([(x-timestamps[2]) for x in timestamps[2:100]], timing_error[2:100])
             plt.xlabel('time /s')
             plt.ylabel('bit time inconsistency /us')
             plt.show(block=True)
