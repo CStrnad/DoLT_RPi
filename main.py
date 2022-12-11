@@ -296,7 +296,7 @@ while operate == True:
         "3) Long message: First two paragraphs of the declaration of Independence\n"
     )
 
-    match(str(input("Choose from the following:\n1) Short Message\n2) Sentence\n3) Long Message\n4) Quit.\n"))):
+    switch(str(input("Choose from the following:\n1) Short Message\n2) Sentence\n3) Long Message\n4) Quit.\n"))):
         case('1'):
             trSend = Thread(target = sendData, args=[testMessage])
             trSend.start()
