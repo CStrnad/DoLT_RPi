@@ -14,7 +14,7 @@ import os
 import matplotlib.pyplot as plt
 
 global bitrate
-bitrate = 6000 #bits per second or laser switches per second
+bitrate = 4000 #bits per second or laser switches per second
 
 
 def clear_console():
@@ -130,7 +130,7 @@ def ptSensorInit():
     expectedCharCount = 10000 
     expectedBitCount = expectedCharCount * 10
     bitStreamDesignator = expectedBitCount * 16
-    phaseShift = 15
+    phaseShift = 25
 
     bits_total = 0 #total received bits counter
     count_int = 0 #number of interrupts received
