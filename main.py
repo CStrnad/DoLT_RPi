@@ -157,12 +157,10 @@ def ptSensorInit():
             n_pulses = round(time_diff/period)  #make sure units match
             bits_total = bits_total + n_pulses
             timing_error[count_int] = time_diff/n_pulses - 1/bitrate
-            #print(f'state= {state}, time_diff= {time_diff}, count_int= {count_int}, n_pulses= {n_pulses}, bits_total= {bits_total}')
 
         #process and display the message
         if done:
             GPIO.remove_event_detect(sensor) #stop interrupts
-            #print('bit_stream: ', bit_stream)
             bits_to_decode = bit_stream[2:(bits_total-10)] #remove pre- and postamble
             try: 
                 decodedArray = decode(bits_to_decode)
@@ -173,9 +171,7 @@ def ptSensorInit():
                 clear_console()
                 print("Error in decoding. Likely due to phasic latency.")
                 pass
-            #print(bits_to_decode)
-            #print(f'timing_errors: {timing_error}')
-            #calculating bit time error and plotting it
+            
             plt.plot([(x-timestamps[2]) for x in timestamps[2:count_int]], timing_error[2:count_int])
             plt.xlabel('time /s')
             plt.ylabel('bit time inconsistency /us')
