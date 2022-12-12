@@ -130,7 +130,7 @@ def ptSensorInit():
     expectedCharCount = 10000 
     expectedBitCount = expectedCharCount * 10
     bitStreamDesignator = expectedBitCount * 16
-    phaseShift = 50
+    phaseShift = 75
 
     bits_total = 0 #total received bits counter
     count_int = 0 #number of interrupts received
